@@ -30,7 +30,30 @@ more precise with categories and prioritizing downloads.
 * [MVCNetworking Sample Project](http://developer.apple.com/library/ios/#samplecode/MVCNetworking/Introduction/Intro.html)
 * [ASIHTTPRequest Project](http://allseeing-i.com/ASIHTTPRequest/)
 
-## Known Issues
+### Questions
+
+My current download solution works with Blocks and the async API of NSURLConnection and an array
+of download items. As each download finishes it starts downloading the next item in a sequential way.
+Downloads are not concurrent. With NSOperationQueue connections are conncurrent and can be set to 1,
+2, 4, 8 or any arbitrary count. Various combinations of settings will be used to determine the optimal
+way to download a batch of images. The test data is currently using the Flickr search API. The duration
+of each download and the total duration for all files will help identify an optimal way of downloading
+several images.
+
+Bandwidth is one factor while processing power is as well. With the async API of NSURLConnection really
+doing most of the work inside of the operation with isolation it should be using minimal processor
+cycles to do the job. With the number of concurrent operations limited it should also cut down on 
+processor needs and be limited mostly by bandwidth.
+
+Finally, it could be possible to switch to GCD entirely if it is possible to show that a single queue
+can be limited to a number of executing blocks to control the number of network connections. It is still
+possible to cancel connections using notifications, so that may become the way make that work to get the
+same advantages provided by NSOperationQueue with having to use NSRunLoop and deal with other issues 
+that come up with thread isolation. There may be some concerns with using GCD in this way. Measuring
+the performance and speed of both approaches should help to identify the optimal way to quickly
+download files and later do other network communications.
+
+### Known Issues
 
 Working with NSOperationQueue and NSOperation has not been as expected or as simple as Apple 
 documentations and WWDC presentations make it out to be. In the case of networking the operation
