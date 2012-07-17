@@ -1,7 +1,9 @@
 OptimizedNetworking
 ===================
 
-iOS project to show how to use NSOperationQueue for optimal networking.
+### iOS project using NSOperationQueue for optimal networking
+
+### Overview
 
 This project is meant to provide a simple way to optimize networking with a focus on using NSOperationQueue
 versus simply using the async API of NSURLConnection or using GCD to offload work to a secondary queue which
