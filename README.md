@@ -53,20 +53,24 @@ that come up with thread isolation. There may be some concerns with using GCD in
 the performance and speed of both approaches should help to identify the optimal way to quickly
 download files and later do other network communications.
 
-### Known Issues
+### How it Works
 
-Working with NSOperationQueue and NSOperation has not been as expected or as simple as Apple 
-documentations and WWDC presentations make it out to be. In the case of networking the operation
-is concurrent which complicates how it works. Specifically NSRunLoop has to be understand and 
-run to ensure callbacks to the delegates are executed. The MVCNetworking example does not make
-it clear how important it is to set up NSRunLoop.
+Working with threads is hard and Apple created NSOperationQueue to help developers avoid the headaches of 
+thread programming. Perhaps it is easier but working with NSOperationQueue was not as trivial as I thought
+it would be.
 
-And while this sample app does work most of the time it appears that it stalls at times. It is
-possible that the NSRunLoop is not firing and processing callbacks for some reason. I will need
-to learn more about NSRunLoop and review other sample projects which use it. Right now I do not
-know a good way to debug NSRunLoop to ensure it is running and processing callbacks.
+First I have an NSOperationQueue and then a class which derives from NSOperation which is effectively an
+abstract class that you are meant to inherit. This operation class has various properties to relay the
+state of the operation and the queue makes use Key Value Observation to determine when an operation is
+ready, executing and finished. Changing the status requires calling changeStatus: which makes the calls
+needed for KVO. Another very important details is the fact that this operation is set to run concurrently
+which is set with the isConcurrent property. Using the async API of NSURLConnection means this operation
+is concurrent which means it will need to use an NSRunLoop to process callbacks. Since an operation runs
+in an isolated thread the run loop is used to process callbacks. And to line everything up the operation
+has to run on the same thread, which is not the main thread, which is also running the NSRunLoop.You can
+see all these details in the MVCNetworking sample project from Apple although it adds a lot more details
+beyond the focus of this project.
 
-I did just put in a Thread to run the NSRunLoop but more testing needs to be done to ensure
-that networking callbacks are fired. Also, the NSRunLoop is set to the default mode. I do not 
-see a mode specific to networking in any of the available sample projects. Ideally only
-networking callbacks would be processed in the scope of this queue.
+* [Managing Concurrency with NSOperation](https://developer.apple.com/library/mac/#featuredarticles/ManagingConcurrency/_index.html)
+* [Introduction to Key-Value Observing Programming Guide](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html)
+* [NSRunLoop Class Reference](https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSRunLoop_Class/Reference/Reference.html)
