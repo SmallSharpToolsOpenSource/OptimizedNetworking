@@ -35,7 +35,7 @@ more precise with categories and prioritizing downloads.
 My current download solution works with Blocks and the async API of NSURLConnection and an array
 of download items. As each download finishes it starts downloading the next item in a sequential way.
 Downloads are not concurrent. With NSOperationQueue connections are conncurrent and can be set to 1,
-2, 4, 8 or any arbitrary count. Various combinations of settings will be used to determine the optimal
+2, 4, 8, 16 or any arbitrary count. Various combinations of settings will be used to determine the optimal
 way to download a batch of images. The test data is currently using the Flickr search API. The duration
 of each download and the total duration for all files will help identify an optimal way of downloading
 several images.
