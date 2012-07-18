@@ -113,6 +113,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
 
 - (void)addOperation:(ONNetworkOperation *)operation {
     @synchronized(self) {
+        
+        // ensure the NSRunLoop thread is running
+        assert([self.networkRunLoopThread isExecuting]);
+        assert(![self.networkRunLoopThread isFinished]);
+        assert(![self.networkRunLoopThread isCancelled]);
+        
         [self.operations addObject:operation];
         
         __weak ONNetworkOperation *weakOperation = operation;
@@ -122,6 +128,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
             [self.operations removeObject:weakOperation];
             DebugLog(@"Finishing operation: %@", weakOperation);
         }];
+        
+        assert([operation respondsToSelector:@selector(setRunLoopThread:)]);
+        
+        if ([operation respondsToSelector:@selector(setRunLoopThread:)]) {
+            if ( [(id)operation runLoopThread] == nil ) {
+                [ (id)operation setRunLoopThread:self.networkRunLoopThread];
+            }
+        }
+        
         [self.networkQueue addOperation:operation];
         [operation changeStatus:ONNetworkOperation_Status_Ready];
         self.queuedCount++;

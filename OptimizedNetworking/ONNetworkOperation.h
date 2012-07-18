@@ -23,6 +23,10 @@ typedef void (^ONNetworkOperationCompletionHandler)(NSData *data, NSError *error
 
 @interface ONNetworkOperation : NSOperation
 
+@property (retain, readwrite) NSThread *runLoopThread; // default is nil, implying main thread
+@property (retain, readonly ) NSThread *actualRunLoopThread; // main thread if runLoopThread is nil, runLoopThread otherwise
+@property (assign, readonly ) BOOL isActualRunLoopThread; // YES if the current thread is the actual run loop thread
+
 @property (nonatomic, copy) ONNetworkOperationCompletionHandler completionHandler;
 @property (nonatomic, retain) NSURLConnection *connection;
 

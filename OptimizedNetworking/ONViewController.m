@@ -30,9 +30,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalQueuedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalErrorsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *averageDownloadTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalDownloadTimeLabel;
 
 @property (strong, nonatomic) NSMutableArray *downloadDurations;
 
+@property (strong, nonatomic) NSDate *startTime;
+@property (strong, nonatomic) NSDate *endTime;
+
+- (IBAction)connectionsCountValueChanged:(id)sender;
 - (IBAction)startDownloadsTapped:(id)sender;
 
 - (void)downloadFlickrSearch;
@@ -59,6 +64,10 @@
 @synthesize totalQueuedLabel = _totalQueuedLabel;
 @synthesize totalErrorsLabel = _totalErrorsLabel;
 @synthesize averageDownloadTimeLabel = _averageDownloadTimeLabel;
+@synthesize totalDownloadTimeLabel = _totalDownloadTimeLabel;
+
+@synthesize startTime;
+@synthesize endTime;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -76,6 +85,11 @@
     [self setTotalQueuedLabel:nil];
     [self setTotalErrorsLabel:nil];
     [self setAverageDownloadTimeLabel:nil];
+    [self setTotalDownloadTimeLabel:nil];
+    
+    [self setStartTime:nil];
+    [self setEndTime:nil];
+    
     [super viewDidUnload];
 }
 
@@ -86,8 +100,13 @@
 #pragma mark - User Actions
 #pragma mark -
 
+- (IBAction)connectionsCountValueChanged:(id)sender {
+    [[ONNetworkManager sharedInstance] setMaxConcurrentOperationCount:[self connectionsCount]];
+}
+
 - (IBAction)startDownloadsTapped:(id)sender {
     DebugLog(@"Starting Downlads");
+    [self.searchTextField resignFirstResponder];
     [self downloadFlickrSearch];
 }
 
@@ -96,6 +115,9 @@
 
 - (void)downloadFlickrSearch {
     [[ONNetworkManager sharedInstance] cancelAll];
+    
+    self.startTime = [NSDate date];
+    self.endTime = [NSDate date];
     
     NSString *urlString = [NSString stringWithFormat:@"%@flickr.photos.search&api_key=%@&is_commons=true&text=%@&per_page=50", 
                            kFlickBaseUrl, kFlickrApiKey, [self encodedSearchText]];
@@ -156,6 +178,8 @@
                     self.sampleImageView.image = image;
                 }
                 
+                self.endTime = [NSDate date];
+                
                 [self updateUI];
             });
         }];
@@ -184,6 +208,9 @@
             else {
                 self.totalErrorsLabel.textColor = [UIColor blackColor];
             }
+            
+            CGFloat totalDuration = [self.endTime timeIntervalSinceDate:self.startTime];
+            self.totalDownloadTimeLabel.text = [NSString stringWithFormat:@"%3.2f", totalDuration];
         }
     });
 }
@@ -236,6 +263,9 @@
             break;
         case 3:
             connectionsCount = 8;
+            break;
+        case 4:
+            connectionsCount = 16;
             break;
             
         default:

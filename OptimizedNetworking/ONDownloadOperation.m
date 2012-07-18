@@ -60,10 +60,6 @@
     // NOTE: Networking on the networking queue should not be happening on the main queue
     assert(dispatch_get_main_queue() != dispatch_get_current_queue());
     
-//    if (dispatch_get_main_queue() != dispatch_get_current_queue()) {
-//        DebugLog(@"Starting URL connection on secondary queue");
-//    }
-    
     self.cancelDownloadObserver = [[NSNotificationCenter defaultCenter] 
                                    addObserverForName:kONDownloadOperation_CancelNotificationName
                                    object:nil 

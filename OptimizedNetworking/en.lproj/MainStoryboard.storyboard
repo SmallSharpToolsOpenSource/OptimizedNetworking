@@ -49,7 +49,11 @@
                                     <segment title="2"/>
                                     <segment title="4"/>
                                     <segment title="8"/>
+                                    <segment title="16"/>
                                 </segments>
+                                <connections>
+                                    <action selector="connectionsCountValueChanged:" destination="2" eventType="valueChanged" id="eNZ-nw-jhP"/>
+                                </connections>
                             </segmentedControl>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search (sunset)" minimumFontSize="17" clearButtonMode="whileEditing" id="iVG-De-kOE">
                                 <rect key="frame" x="20" y="56" width="280" height="31"/>
@@ -61,28 +65,35 @@
                                 </connections>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="3Hj-ws-FPk">
-                                <rect key="frame" x="48" y="191" width="50" height="21"/>
+                                <rect key="frame" x="42" y="191" width="40" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="deo-4u-ieb">
-                                <rect key="frame" x="106" y="191" width="50" height="21"/>
+                                <rect key="frame" x="95" y="191" width="40" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="eVw-9B-HEb">
-                                <rect key="frame" x="164" y="191" width="50" height="21"/>
+                                <rect key="frame" x="143" y="191" width="40" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="jS4-Ix-Pcg">
-                                <rect key="frame" x="222" y="191" width="50" height="21"/>
+                                <rect key="frame" x="191" y="191" width="40" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Bmp-Za-A0g">
+                                <rect key="frame" x="239" y="191" width="40" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -97,6 +108,7 @@
                         <outlet property="connectionsCountSegmentedControl" destination="r96-JQ-OqX" id="ool-mW-gwR"/>
                         <outlet property="sampleImageView" destination="2AU-jm-LD4" id="5mb-Ig-LCo"/>
                         <outlet property="searchTextField" destination="iVG-De-kOE" id="8tb-wL-0qX"/>
+                        <outlet property="totalDownloadTimeLabel" destination="Bmp-Za-A0g" id="l95-6s-rTC"/>
                         <outlet property="totalDownloadsLabel" destination="3Hj-ws-FPk" id="YA2-Ja-zuX"/>
                         <outlet property="totalErrorsLabel" destination="eVw-9B-HEb" id="cNW-Rh-aHi"/>
                         <outlet property="totalQueuedLabel" destination="deo-4u-ieb" id="4uo-a0-dfE"/>
@@ -110,11 +122,13 @@
         <class className="ONViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ONViewController.h"/>
             <relationships>
+                <relationship kind="action" name="connectionsCountValueChanged:"/>
                 <relationship kind="action" name="startDownloadsTapped:"/>
                 <relationship kind="outlet" name="averageDownloadTimeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="connectionsCountSegmentedControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="sampleImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="searchTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="totalDownloadTimeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="totalDownloadsLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="totalErrorsLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="totalQueuedLabel" candidateClass="UILabel"/>

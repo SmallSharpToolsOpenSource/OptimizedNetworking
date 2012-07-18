@@ -30,6 +30,10 @@
 
 @implementation ONNetworkOperation
 
+@synthesize runLoopThread = _runLoopThread;
+@synthesize actualRunLoopThread= _actualRunLoopThread;
+@synthesize isActualRunLoopThread = _isActualRunLoopThread;
+
 @synthesize completionHandler = _completionHandler;
 
 @synthesize connection = _connection;
@@ -78,6 +82,23 @@
     return duration;
 }
 
+// Returns the effective run loop thread, that is, the one set by the user 
+// or, if that's not set, the main thread.
+- (NSThread *)actualRunLoopThread {
+    NSThread *  result;
+    
+    result = self.runLoopThread;
+    if (result == nil) {
+        result = [NSThread mainThread];
+    }
+    return result;
+}
+
+// Returns YES if the current thread is the actual run loop thread.
+- (BOOL)isActualRunLoopThread {
+    return [[NSThread currentThread] isEqual:self.actualRunLoopThread];
+}
+
 #pragma mark - Private Methods
 #pragma mark -
 
@@ -114,6 +135,8 @@
 
 - (void)startNetworkOperation {
     // meant to be overridden
+    
+    assert(self.isActualRunLoopThread);
     
     // NOTE: Networking on the networking queue should not be happening on the main queue
     assert(dispatch_get_main_queue() != dispatch_get_current_queue());
@@ -191,15 +214,14 @@
     [super start];
     
     assert(![self isCompleted]);
+    assert([self.actualRunLoopThread isExecuting]);
+    assert(![self.actualRunLoopThread isCancelled]);
 
     self.operationStartDate = [NSDate date];
     [self changeStatus:ONNetworkOperation_Status_Executing];
-    [self startNetworkOperation];
     
-    // run the run loop to allow delegate callbacks to run (moved to a thread in the manager) (See MVC Networking)
-    do {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-    } while ( ! [self isCompleted] );
+    NSArray *modes = [NSArray arrayWithObject:NSDefaultRunLoopMode];
+    [self performSelector:@selector(startNetworkOperation) onThread:self.actualRunLoopThread withObject:nil waitUntilDone:NO modes:modes];
 }
 
 - (void)cancel {    
