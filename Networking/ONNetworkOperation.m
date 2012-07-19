@@ -9,7 +9,6 @@
 #import "ONNetworkOperation.h"
 
 #import "ONNetworkManager.h"
-#import "ONDownloadItem.h"
 
 @interface ONNetworkOperation () <NSURLConnectionDataDelegate>
 

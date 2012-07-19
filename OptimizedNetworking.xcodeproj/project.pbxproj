@@ -20,14 +20,14 @@
 		2605086715ACA7B100974E02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2605084815ACA7B000974E02 /* Foundation.framework */; };
 		2605086F15ACA7B100974E02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2605086D15ACA7B100974E02 /* InfoPlist.strings */; };
 		2605087215ACA7B100974E02 /* OptimizedNetworkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2605087115ACA7B100974E02 /* OptimizedNetworkingTests.m */; };
-		2605087E15ACA7D800974E02 /* ONNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2605087D15ACA7D800974E02 /* ONNetworkManager.m */; };
-		2605088115ACA7EB00974E02 /* ONNetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2605088015ACA7EB00974E02 /* ONNetworkOperation.m */; };
-		2605088415ACA80600974E02 /* ONDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2605088315ACA80600974E02 /* ONDownloadOperation.m */; };
-		2605088915ACBE8600974E02 /* ONDownloadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2605088815ACBE8600974E02 /* ONDownloadItem.m */; };
 		26C904FC15B75E180068666C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26C904FB15B75E180068666C /* Icon@2x.png */; };
 		26C904FF15B75E1D0068666C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26C904FE15B75E1D0068666C /* Icon.png */; };
 		26C9050115B75F870068666C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26C9050015B75F870068666C /* Default@2x.png */; };
 		26C9050315B75F8F0068666C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 26C9050215B75F8F0068666C /* Default.png */; };
+		26C9054415B85D400068666C /* ONDownloadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9053B15B85D400068666C /* ONDownloadItem.m */; };
+		26C9054515B85D400068666C /* ONDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9053D15B85D400068666C /* ONDownloadOperation.m */; };
+		26C9054615B85D400068666C /* ONNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9054015B85D400068666C /* ONNetworkManager.m */; };
+		26C9054715B85D400068666C /* ONNetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9054215B85D400068666C /* ONNetworkOperation.m */; };
 		26CD4C8C15B4F74600806048 /* ONFlickrPhotoSetParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 26CD4C8B15B4F74600806048 /* ONFlickrPhotoSetParser.m */; };
 /* End PBXBuildFile section */
 
@@ -61,20 +61,21 @@
 		2605086E15ACA7B100974E02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2605087015ACA7B100974E02 /* OptimizedNetworkingTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptimizedNetworkingTests.h; sourceTree = "<group>"; };
 		2605087115ACA7B100974E02 /* OptimizedNetworkingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptimizedNetworkingTests.m; sourceTree = "<group>"; };
-		2605087C15ACA7D800974E02 /* ONNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ONNetworkManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		2605087D15ACA7D800974E02 /* ONNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ONNetworkManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		2605087F15ACA7EB00974E02 /* ONNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ONNetworkOperation.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		2605088015ACA7EB00974E02 /* ONNetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ONNetworkOperation.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		2605088215ACA80600974E02 /* ONDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONDownloadOperation.h; sourceTree = "<group>"; };
-		2605088315ACA80600974E02 /* ONDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONDownloadOperation.m; sourceTree = "<group>"; };
 		2605088615ACBB6D00974E02 /* Singleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
-		2605088715ACBE8600974E02 /* ONDownloadItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONDownloadItem.h; sourceTree = "<group>"; };
-		2605088815ACBE8600974E02 /* ONDownloadItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONDownloadItem.m; sourceTree = "<group>"; };
-		2605088A15ACBF5100974E02 /* ONNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ONNetworking.h; sourceTree = "<group>"; };
 		26C904FB15B75E180068666C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		26C904FE15B75E1D0068666C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		26C9050015B75F870068666C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		26C9050215B75F8F0068666C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		26C9053A15B85D400068666C /* ONDownloadItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONDownloadItem.h; sourceTree = "<group>"; };
+		26C9053B15B85D400068666C /* ONDownloadItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONDownloadItem.m; sourceTree = "<group>"; };
+		26C9053C15B85D400068666C /* ONDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONDownloadOperation.h; sourceTree = "<group>"; };
+		26C9053D15B85D400068666C /* ONDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONDownloadOperation.m; sourceTree = "<group>"; };
+		26C9053E15B85D400068666C /* ONNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONNetworking.h; sourceTree = "<group>"; };
+		26C9053F15B85D400068666C /* ONNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONNetworkManager.h; sourceTree = "<group>"; };
+		26C9054015B85D400068666C /* ONNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONNetworkManager.m; sourceTree = "<group>"; };
+		26C9054115B85D400068666C /* ONNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONNetworkOperation.h; sourceTree = "<group>"; };
+		26C9054215B85D400068666C /* ONNetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONNetworkOperation.m; sourceTree = "<group>"; };
+		26C9054315B85D400068666C /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
 		26CD4C8A15B4F74500806048 /* ONFlickrPhotoSetParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONFlickrPhotoSetParser.h; sourceTree = "<group>"; };
 		26CD4C8B15B4F74600806048 /* ONFlickrPhotoSetParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONFlickrPhotoSetParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,7 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				2605088515ACBB5C00974E02 /* Common */,
-				2605087B15ACA7BF00974E02 /* Networking */,
+				26C9053915B85D400068666C /* Networking */,
 				2605085815ACA7B000974E02 /* MainStoryboard.storyboard */,
 				2605085515ACA7B000974E02 /* ONAppDelegate.h */,
 				2605085615ACA7B000974E02 /* ONAppDelegate.m */,
@@ -184,22 +185,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		2605087B15ACA7BF00974E02 /* Networking */ = {
-			isa = PBXGroup;
-			children = (
-				2605088A15ACBF5100974E02 /* ONNetworking.h */,
-				2605087C15ACA7D800974E02 /* ONNetworkManager.h */,
-				2605087D15ACA7D800974E02 /* ONNetworkManager.m */,
-				2605087F15ACA7EB00974E02 /* ONNetworkOperation.h */,
-				2605088015ACA7EB00974E02 /* ONNetworkOperation.m */,
-				2605088215ACA80600974E02 /* ONDownloadOperation.h */,
-				2605088315ACA80600974E02 /* ONDownloadOperation.m */,
-				2605088715ACBE8600974E02 /* ONDownloadItem.h */,
-				2605088815ACBE8600974E02 /* ONDownloadItem.m */,
-			);
-			name = Networking;
-			sourceTree = "<group>";
-		};
 		2605088515ACBB5C00974E02 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -207,6 +192,23 @@
 			);
 			name = Common;
 			sourceTree = "<group>";
+		};
+		26C9053915B85D400068666C /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				26C9053E15B85D400068666C /* ONNetworking.h */,
+				26C9053F15B85D400068666C /* ONNetworkManager.h */,
+				26C9054015B85D400068666C /* ONNetworkManager.m */,
+				26C9054115B85D400068666C /* ONNetworkOperation.h */,
+				26C9054215B85D400068666C /* ONNetworkOperation.m */,
+				26C9053C15B85D400068666C /* ONDownloadOperation.h */,
+				26C9053D15B85D400068666C /* ONDownloadOperation.m */,
+				26C9053A15B85D400068666C /* ONDownloadItem.h */,
+				26C9053B15B85D400068666C /* ONDownloadItem.m */,
+				26C9054315B85D400068666C /* Singleton.h */,
+			);
+			path = Networking;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -323,11 +325,11 @@
 				2605085315ACA7B000974E02 /* main.m in Sources */,
 				2605085715ACA7B000974E02 /* ONAppDelegate.m in Sources */,
 				2605085D15ACA7B000974E02 /* ONViewController.m in Sources */,
-				2605087E15ACA7D800974E02 /* ONNetworkManager.m in Sources */,
-				2605088115ACA7EB00974E02 /* ONNetworkOperation.m in Sources */,
-				2605088415ACA80600974E02 /* ONDownloadOperation.m in Sources */,
-				2605088915ACBE8600974E02 /* ONDownloadItem.m in Sources */,
 				26CD4C8C15B4F74600806048 /* ONFlickrPhotoSetParser.m in Sources */,
+				26C9054415B85D400068666C /* ONDownloadItem.m in Sources */,
+				26C9054515B85D400068666C /* ONDownloadOperation.m in Sources */,
+				26C9054615B85D400068666C /* ONNetworkManager.m in Sources */,
+				26C9054715B85D400068666C /* ONNetworkOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
