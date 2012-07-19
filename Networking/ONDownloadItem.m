@@ -8,6 +8,10 @@
 
 #import "ONDownloadItem.h"
 
+#import "ONNetworkManager.h"
+#import "ONDownloadOperation.h"
+#import "ONNetworkOperation.h"
+
 #define kEmptyCacheKey  @"";
 
 @implementation ONDownloadItem
@@ -41,6 +45,13 @@
     [str replaceOccurrencesOfString:@"/" withString:@"-" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
     
     return str;
+}
+
++ (void)addDownloadOperationWithURL:(NSURL *)url andPriority:(ONDownloadItem_Priority)priority andCategory:(NSString *)category withCompletionHandler:(ONNetworkOperationCompletionHandler)completionHandler {
+    ONDownloadItem *downloadItem = [[ONDownloadItem alloc] initWithURL:url];
+    ONDownloadOperation *downloadOperation = [[ONDownloadOperation alloc] initWithDownloadItem:downloadItem];
+    downloadOperation.completionHandler = completionHandler;
+    [[ONNetworkManager sharedInstance] addOperation:downloadOperation];
 }
 
 @end

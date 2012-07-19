@@ -28,6 +28,8 @@
 		26C9054515B85D400068666C /* ONDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9053D15B85D400068666C /* ONDownloadOperation.m */; };
 		26C9054615B85D400068666C /* ONNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9054015B85D400068666C /* ONNetworkManager.m */; };
 		26C9054715B85D400068666C /* ONNetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9054215B85D400068666C /* ONNetworkOperation.m */; };
+		26C9055D15B892200068666C /* ONHeadRequestOpertion.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9055C15B8921F0068666C /* ONHeadRequestOpertion.m */; };
+		26C9056215B8973B0068666C /* NSDate+InternetDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9056015B8973B0068666C /* NSDate+InternetDateTime.m */; };
 		26CD4C8C15B4F74600806048 /* ONFlickrPhotoSetParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 26CD4C8B15B4F74600806048 /* ONFlickrPhotoSetParser.m */; };
 /* End PBXBuildFile section */
 
@@ -61,7 +63,6 @@
 		2605086E15ACA7B100974E02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2605087015ACA7B100974E02 /* OptimizedNetworkingTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptimizedNetworkingTests.h; sourceTree = "<group>"; };
 		2605087115ACA7B100974E02 /* OptimizedNetworkingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptimizedNetworkingTests.m; sourceTree = "<group>"; };
-		2605088615ACBB6D00974E02 /* Singleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
 		26C904FB15B75E180068666C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		26C904FE15B75E1D0068666C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		26C9050015B75F870068666C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -75,7 +76,11 @@
 		26C9054015B85D400068666C /* ONNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONNetworkManager.m; sourceTree = "<group>"; };
 		26C9054115B85D400068666C /* ONNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONNetworkOperation.h; sourceTree = "<group>"; };
 		26C9054215B85D400068666C /* ONNetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONNetworkOperation.m; sourceTree = "<group>"; };
-		26C9054315B85D400068666C /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
+		26C9055B15B8921F0068666C /* ONHeadRequestOpertion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONHeadRequestOpertion.h; sourceTree = "<group>"; };
+		26C9055C15B8921F0068666C /* ONHeadRequestOpertion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONHeadRequestOpertion.m; sourceTree = "<group>"; };
+		26C9055F15B8973B0068666C /* NSDate+InternetDateTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+InternetDateTime.h"; path = "Common/NSDate+InternetDateTime.h"; sourceTree = SOURCE_ROOT; };
+		26C9056015B8973B0068666C /* NSDate+InternetDateTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+InternetDateTime.m"; path = "Common/NSDate+InternetDateTime.m"; sourceTree = SOURCE_ROOT; };
+		26C9056115B8973B0068666C /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Singleton.h; path = Common/Singleton.h; sourceTree = SOURCE_ROOT; };
 		26CD4C8A15B4F74500806048 /* ONFlickrPhotoSetParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONFlickrPhotoSetParser.h; sourceTree = "<group>"; };
 		26CD4C8B15B4F74600806048 /* ONFlickrPhotoSetParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONFlickrPhotoSetParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -188,7 +193,9 @@
 		2605088515ACBB5C00974E02 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				2605088615ACBB6D00974E02 /* Singleton.h */,
+				26C9055F15B8973B0068666C /* NSDate+InternetDateTime.h */,
+				26C9056015B8973B0068666C /* NSDate+InternetDateTime.m */,
+				26C9056115B8973B0068666C /* Singleton.h */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -205,7 +212,8 @@
 				26C9053D15B85D400068666C /* ONDownloadOperation.m */,
 				26C9053A15B85D400068666C /* ONDownloadItem.h */,
 				26C9053B15B85D400068666C /* ONDownloadItem.m */,
-				26C9054315B85D400068666C /* Singleton.h */,
+				26C9055B15B8921F0068666C /* ONHeadRequestOpertion.h */,
+				26C9055C15B8921F0068666C /* ONHeadRequestOpertion.m */,
 			);
 			path = Networking;
 			sourceTree = SOURCE_ROOT;
@@ -330,6 +338,8 @@
 				26C9054515B85D400068666C /* ONDownloadOperation.m in Sources */,
 				26C9054615B85D400068666C /* ONNetworkManager.m in Sources */,
 				26C9054715B85D400068666C /* ONNetworkOperation.m in Sources */,
+				26C9055D15B892200068666C /* ONHeadRequestOpertion.m in Sources */,
+				26C9056215B8973B0068666C /* NSDate+InternetDateTime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

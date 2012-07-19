@@ -10,16 +10,12 @@
 
 #import "ONNetworkManager.h"
 
+#define kDefaultHttpMethod              @"GET"
+
 @interface ONNetworkOperation () <NSURLConnectionDataDelegate>
 
-@property (strong, nonatomic) NSMutableData *receivedData;
 @property (strong, nonatomic) NSDate *operationStartDate;
 @property (strong, nonatomic) NSDate *operationEndDate;
-
-- (void)startNetworkOperation;
-- (void)cancelNetworkOperation;
-- (void)failNetworkOperation;
-- (void)finishNetworkOperation;
 
 - (BOOL)isCompleted;
 
@@ -36,7 +32,7 @@
 @synthesize completionHandler = _completionHandler;
 
 @synthesize connection = _connection;
-@synthesize receivedData = _receivedData;
+@synthesize httpMethod = _httpMethod;
 @synthesize operationStartDate = _operationStartDate;
 @synthesize operationEndDate = _operationEndDate;
 
@@ -44,6 +40,9 @@
 @synthesize category = _category;
 @synthesize status = _status;
 @synthesize error = _error;
+
+@synthesize response = _response;
+@synthesize receivedData = _receivedData;
 
 #pragma mark - Public Methods
 #pragma mark -
@@ -68,6 +67,9 @@
         [self willChangeValueForKey:@"isFinished"];
         self.status = ONNetworkOperation_Status_Finished;
         [self didChangeValueForKey:@"isFinished"];
+    }
+    else {
+        self.status = status;
     }
 }
 
@@ -96,6 +98,10 @@
 // Returns YES if the current thread is the actual run loop thread.
 - (BOOL)isActualRunLoopThread {
     return [[NSThread currentThread] isEqual:self.actualRunLoopThread];
+}
+
+- (NSString *)httpMethod {
+    return kDefaultHttpMethod;
 }
 
 #pragma mark - Private Methods
@@ -149,6 +155,10 @@
                                     requestWithURL:self.url 
                                     cachePolicy:NSURLRequestUseProtocolCachePolicy 
                                     timeoutInterval:30];
+    
+    if (! [[self httpMethod] isEqualToString:kDefaultHttpMethod]) {
+        [request setHTTPMethod:[self httpMethod]];
+    }
     
     // ensure a fresh response is returned
     [request setValue:@"Cache-Control" forHTTPHeaderField:@"no-cache"];
@@ -264,6 +274,10 @@
 
 - (void)connection:(NSURLConnection *)theConnection didReceiveResponse:(NSURLResponse *)response {
 	/* create the NSMutableData instance that will hold the received data */
+    
+    if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+        self.response = (NSHTTPURLResponse *)response;
+    }
     
     if([response isKindOfClass:[NSHTTPURLResponse class]]) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;

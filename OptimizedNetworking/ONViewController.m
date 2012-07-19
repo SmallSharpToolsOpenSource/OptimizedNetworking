@@ -52,8 +52,6 @@
     NSUInteger totalErrors;
 }
 
-@synthesize downloadDurations = _downloadDurations;
-
 #pragma mark - Properties
 #pragma mark -
 
@@ -66,6 +64,8 @@
 @synthesize averageDownloadTimeLabel = _averageDownloadTimeLabel;
 @synthesize totalDownloadTimeLabel = _totalDownloadTimeLabel;
 
+@synthesize downloadDurations = _downloadDurations;
+
 @synthesize startTime;
 @synthesize endTime;
 
@@ -74,6 +74,16 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     self.downloadDurations = [NSMutableArray array];
+    
+    [ONHeadRequestOpertion addHeadRquestOperationWithURL:[NSURL URLWithString:@"http://www.apple.com/robots.txt"] withHeadRequestCompletionHandler:^(NSDictionary *dictionary, NSError *error) {
+        if (error != nil) {
+            DebugLog(@"Error: %@", error);
+        }
+        else {
+            DebugLog(@"Response Headers:\n%@", dictionary);
+        }
+    }];
+    
 }
 
 - (void)viewDidUnload {
@@ -86,6 +96,8 @@
     [self setTotalErrorsLabel:nil];
     [self setAverageDownloadTimeLabel:nil];
     [self setTotalDownloadTimeLabel:nil];
+    
+    [self setDownloadDurations:nil];
     
     [self setStartTime:nil];
     [self setEndTime:nil];
