@@ -44,6 +44,19 @@
 @synthesize response = _response;
 @synthesize receivedData = _receivedData;
 
+#pragma mark - Initialization
+#pragma mark -
+
+- (id)init {
+    self = [super init];
+    if (self != nil) {
+        self.category = @"Default";
+        self.status = ONNetworkOperation_Status_Waiting;
+    }
+    
+    return self;
+}
+
 #pragma mark - Public Methods
 #pragma mark -
 
@@ -108,19 +121,19 @@
 #pragma mark -
 
 - (NSString *)statusAsString {
-    if (self.status = ONNetworkOperation_Status_Waiting) {
+    if (self.status == ONNetworkOperation_Status_Waiting) {
         return @"Waiting";
     }
-    else if (self.status = ONNetworkOperation_Status_Ready) {
+    else if (self.status == ONNetworkOperation_Status_Ready) {
         return @"Ready";
     }
-    else if (self.status = ONNetworkOperation_Status_Executing) {
+    else if (self.status == ONNetworkOperation_Status_Executing) {
         return @"Executing";
     }
-    else if (self.status = ONNetworkOperation_Status_Cancelled) {
+    else if (self.status == ONNetworkOperation_Status_Cancelled) {
         return @"Cancelled";
     }
-    else if (self.status = ONNetworkOperation_Status_Finished) {
+    else if (self.status == ONNetworkOperation_Status_Finished) {
         return @"Finished";
     }
     else {
@@ -145,10 +158,6 @@
     
     // NOTE: Networking on the networking queue should not be happening on the main queue
     assert(dispatch_get_main_queue() != dispatch_get_current_queue());
-    
-    if (dispatch_get_main_queue() != dispatch_get_current_queue()) {
-        DebugLog(@"Starting URL connection on secondary queue");
-    }
     
     // use the default cache policy to do the memory/disk caching
     NSMutableURLRequest *request = [NSMutableURLRequest 
@@ -225,7 +234,7 @@
     assert(![self isCompleted]);
     assert([self.actualRunLoopThread isExecuting]);
     assert(![self.actualRunLoopThread isCancelled]);
-
+    
     self.operationStartDate = [NSDate date];
     [self changeStatus:ONNetworkOperation_Status_Executing];
     
@@ -288,8 +297,8 @@
             NSError *error = [NSError errorWithDomain:@"ONNetworkOperationErrorDomain"
                                                  code:httpResponse.statusCode
                                              userInfo:userInfo];
-            self.completionHandler(nil, error);
-            [self cancelNetworkOperation];
+            self.error = error;
+            [self failNetworkOperation];
             return;
         }
     }
@@ -303,18 +312,18 @@
 
 - (void)connection:(NSURLConnection *)theConnection didReceiveData:(NSData *)data {
     /* Append the new data to the received data. */
-//    DebugLog(@"didReceiveData: %@", self);
+    //    DebugLog(@"didReceiveData: %@", self);
     [self.receivedData appendData:data];
 }
 
 - (void)connection:(NSURLConnection *)theConnection didFailWithError:(NSError *)error {
-//    DebugLog(@"didFailWithError: %@", error);
+    //    DebugLog(@"didFailWithError: %@", error);
     self.error = error;
     [self failNetworkOperation];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)theConnection {
-//    DebugLog(@"connectionDidFinishLoading");
+    //    DebugLog(@"connectionDidFinishLoading");
     [self finishNetworkOperation];
 }
 
