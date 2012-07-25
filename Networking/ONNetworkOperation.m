@@ -92,7 +92,6 @@
     }
     
     CGFloat duration = [self.operationEndDate timeIntervalSinceDate:self.operationStartDate];
-    DebugLog(@"duration: %f", duration);
     return duration;
 }
 
@@ -158,7 +157,7 @@
     
     // NOTE: Networking on the networking queue should not be happening on the main queue
     assert(dispatch_get_main_queue() != dispatch_get_current_queue());
-    
+        
     // use the default cache policy to do the memory/disk caching
     NSMutableURLRequest *request = [NSMutableURLRequest 
                                     requestWithURL:self.url 
@@ -184,9 +183,8 @@
         NSError *error = [NSError errorWithDomain:@"ONNetworkOperationErrorDomain"
                                              code:100
                                          userInfo:userInfo];
-        DebugLog(@"Error: %@", errorMessage);
-        self.completionHandler(nil, error);
-        [self changeStatus:ONNetworkOperation_Status_Finished];
+        self.error = error;
+        [self failNetworkOperation];
         return;
     }
     
@@ -228,13 +226,12 @@
 #pragma mark -
 
 - (void)start {
-    DebugLog(@"starting network operation");
     [super start];
     
     assert(![self isCompleted]);
     assert([self.actualRunLoopThread isExecuting]);
     assert(![self.actualRunLoopThread isCancelled]);
-    
+
     self.operationStartDate = [NSDate date];
     [self changeStatus:ONNetworkOperation_Status_Executing];
     
@@ -312,18 +309,15 @@
 
 - (void)connection:(NSURLConnection *)theConnection didReceiveData:(NSData *)data {
     /* Append the new data to the received data. */
-    //    DebugLog(@"didReceiveData: %@", self);
     [self.receivedData appendData:data];
 }
 
 - (void)connection:(NSURLConnection *)theConnection didFailWithError:(NSError *)error {
-    //    DebugLog(@"didFailWithError: %@", error);
     self.error = error;
     [self failNetworkOperation];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)theConnection {
-    //    DebugLog(@"connectionDidFinishLoading");
     [self finishNetworkOperation];
 }
 

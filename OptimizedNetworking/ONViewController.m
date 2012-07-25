@@ -48,7 +48,6 @@
 
 @implementation ONViewController {
     NSUInteger totalDownloads;
-    NSUInteger totalQueued;
     NSUInteger totalErrors;
 }
 
@@ -105,6 +104,16 @@
     [super viewDidUnload];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self becomeFirstResponder];
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
@@ -117,7 +126,7 @@
 }
 
 - (IBAction)startDownloadsTapped:(id)sender {
-    DebugLog(@"Starting Downlads");
+    DebugLog(@"Starting Downloads");
     [self.searchTextField resignFirstResponder];
     [self downloadFlickrSearch];
 }
@@ -162,7 +171,6 @@
     [[ONNetworkManager sharedInstance] setMaxConcurrentOperationCount:[self connectionsCount]];
     
     totalDownloads = 0;
-    totalQueued = 0;
     totalErrors = 0;
     [self.downloadDurations removeAllObjects];
     
@@ -175,23 +183,25 @@
         ONDownloadOperation *operation = [[ONDownloadOperation alloc] initWithDownloadItem:downloadItem];
         __weak ONDownloadOperation *weakOperation = operation;
         [operation setCompletionHandler:^(NSData *data, NSError *error) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.25 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                
-                [self.downloadDurations addObject:[NSNumber numberWithFloat:[weakOperation operationDuration]]];
-                totalQueued = [[ONNetworkManager sharedInstance] operationsCount];
-                
-                if (error != nil) {
-                    DebugLog(@"Error: %@", error);
-                    totalErrors++;
-                }
-                else {
-                    // change the data into an image and display it to show progress
-                    UIImage *image = [UIImage imageWithData:data];
-                    self.sampleImageView.image = image;
-                }
-                
-                self.endTime = [NSDate date];
-                
+            [self.downloadDurations addObject:[NSNumber numberWithFloat:[weakOperation operationDuration]]];
+            
+            if (error != nil) {
+                DebugLog(@"Error: %@", error);
+                totalErrors++;
+            }
+            else {
+                // change the data into an image and display it to show progress
+                UIImage *image = [UIImage imageWithData:data];
+                self.sampleImageView.image = image;
+            }
+            
+            self.endTime = [NSDate date];
+            
+            DebugLog(@"Completed %@", weakOperation);
+            
+            [self updateUI];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                 [self updateUI];
             });
         }];
@@ -202,7 +212,6 @@
     DebugLog(@"Adding operations");
     [[ONNetworkManager sharedInstance] addOperations:downloadOperations];
     
-    totalQueued = [[ONNetworkManager sharedInstance] operationsCount];
     [self updateUI];
 }
 
@@ -210,7 +219,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         @synchronized (self) {
             self.totalDownloadsLabel.text = [NSString stringWithFormat:@"%i", totalDownloads];
-            self.totalQueuedLabel.text = [NSString stringWithFormat:@"%i", totalQueued];
+            self.totalQueuedLabel.text = [NSString stringWithFormat:@"%i", [[ONNetworkManager sharedInstance] operationsCount]];
             self.totalErrorsLabel.text = [NSString stringWithFormat:@"%i", totalErrors];
             self.averageDownloadTimeLabel.text = [NSString stringWithFormat:@"%3.2f", [self calculatedAverageDownloadDuration]];
             
@@ -228,7 +237,6 @@
 }
 
 - (NSTimeInterval)calculatedAverageDownloadDuration {
-    DebugLog(@"Calculating average duration for %i durations", self.downloadDurations.count);
     if (self.downloadDurations.count == 0) {
         return 0.0;
     }
@@ -294,6 +302,16 @@
     [self.searchTextField resignFirstResponder];
     
     return YES;
+}
+
+#pragma mark - UIResponder (Motion Events)
+#pragma mark -
+
+- (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if (event.type == UIEventTypeMotion && event.subtype == UIEventSubtypeMotionShake) {
+        [self updateUI];
+        [[ONNetworkManager sharedInstance] logOperations];
+    }
 }
 
 @end

@@ -23,6 +23,8 @@ SYNTHESIZE_SINGLETON_FOR_HEADER(ONNetworkManager);
 - (void)cancelOperationsWithCategory:(NSString *)category;
 - (void)cancelAll;
 
+- (void)logOperations;
+
 + (NSArray *)sortOperations:(NSArray *)operations;
 
 - (void)didStartNetworking;

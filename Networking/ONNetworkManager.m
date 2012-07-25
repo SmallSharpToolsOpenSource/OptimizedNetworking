@@ -24,7 +24,7 @@
 #pragma mark - Constants
 #pragma mark -
 
-#define kDefaultMaxConcurrentOperationCount    4
+#define kDefaultMaxConcurrentOperationCount    8
 
 #pragma mark - Class Extension
 #pragma mark -
@@ -124,9 +124,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
         __weak ONNetworkOperation *weakOperation = operation;
         
         [operation setCompletionBlock:^{
-            self.queuedCount--;
-            [self.operations removeObject:weakOperation];
-            DebugLog(@"Finishing operation: %@", weakOperation);
+            @synchronized(self) {
+                self.queuedCount--;
+                [self.operations removeObject:weakOperation];
+            }
         }];
         
         assert([operation respondsToSelector:@selector(setRunLoopThread:)]);
@@ -145,7 +146,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
 
 - (void)cancelOperation:(ONNetworkOperation *)operation {
     @synchronized(self) {
-        DebugLog(@"Canceling operation: %@", operation);
         [operation cancel];
         [self.operations removeObjectIdenticalTo:operation];
     }
@@ -170,6 +170,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
     @synchronized(self) {
         [self.networkQueue cancelAllOperations];
         [self.operations removeAllObjects];
+    }
+}
+
+- (void)logOperations {
+    @synchronized(self) {
+        DebugLog(@"There are %i active operations", [self operationsCount]);
+        for (ONNetworkOperation *operation in self.operations) {
+            DebugLog(@"%@", operation);
+        }
     }
 }
 
