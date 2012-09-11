@@ -44,9 +44,6 @@
     NSUInteger networkingCount;
 }
 
-#pragma mark - Properties
-#pragma mark -
-
 #pragma mark - Singleton
 #pragma mark -
 

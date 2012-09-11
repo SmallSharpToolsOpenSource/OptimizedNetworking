@@ -51,7 +51,7 @@
     NSUInteger totalErrors;
 }
 
-#pragma mark - Properties
+#pragma mark - View Lifecycle
 #pragma mark -
 
 - (void)viewDidLoad {

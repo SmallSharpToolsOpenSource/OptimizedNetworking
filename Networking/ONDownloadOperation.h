@@ -12,13 +12,9 @@
 
 @interface ONDownloadOperation : ONNetworkOperation
 
-- (id)initWithDownloadItem:(ONDownloadItem *)downloadItem;
-- (id)initWithDownloadItem:(ONDownloadItem *)downloadItem andCategory:(NSString *)category;
-
 @property (strong, nonatomic) ONDownloadItem *downloadItem;
 
 - (id)initWithDownloadItem:(ONDownloadItem *)downloadItem;
-
 - (id)initWithDownloadItem:(ONDownloadItem *)downloadItem andCategory:(NSString *)category;
 
 @end
