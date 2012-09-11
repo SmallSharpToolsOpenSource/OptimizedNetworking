@@ -22,10 +22,6 @@
 
 @implementation ONDownloadOperation
 
-@synthesize cancelDownloadObserver = _cancelDownloadObserver;
-
-@synthesize downloadItem = _downloadItem;
-
 - (id)initWithDownloadItem:(ONDownloadItem *)downloadItem {
     return [self initWithDownloadItem:downloadItem andCategory:@"Default"];
 }

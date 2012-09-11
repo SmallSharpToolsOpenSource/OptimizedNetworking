@@ -37,8 +37,6 @@
 
 @implementation ONFlickrPhotoSetParser
 
-@synthesize imageUrls;
-
 - (void)parseWithData:(NSData *)data withCompletionBlock:(void (^)(NSArray *imageUrls, NSError *error))completionBlock {
     self.imageUrls = [NSMutableArray array];
     

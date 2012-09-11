@@ -25,25 +25,6 @@
 
 @implementation ONNetworkOperation
 
-@synthesize runLoopThread = _runLoopThread;
-@synthesize actualRunLoopThread= _actualRunLoopThread;
-@synthesize isActualRunLoopThread = _isActualRunLoopThread;
-
-@synthesize completionHandler = _completionHandler;
-
-@synthesize connection = _connection;
-@synthesize httpMethod = _httpMethod;
-@synthesize operationStartDate = _operationStartDate;
-@synthesize operationEndDate = _operationEndDate;
-
-@synthesize url =_url;
-@synthesize category = _category;
-@synthesize status = _status;
-@synthesize error = _error;
-
-@synthesize response = _response;
-@synthesize receivedData = _receivedData;
-
 #pragma mark - Initialization
 #pragma mark -
 

@@ -13,8 +13,6 @@
 
 @implementation ONHeadRequestOpertion
 
-@synthesize headRequestCompletionHandler = _headRequestCompletionHandler;
-
 - (NSString *)httpMethod {
     return @"HEAD";
 }

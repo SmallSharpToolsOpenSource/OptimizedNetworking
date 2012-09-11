@@ -47,11 +47,6 @@
 #pragma mark - Properties
 #pragma mark -
 
-@synthesize networkRunLoopThread = _networkRunLoopThread;
-@synthesize networkQueue = _networkQueue;
-@synthesize operations = _operations;
-@synthesize queuedCount = _queuedCount;
-
 #pragma mark - Singleton
 #pragma mark -
 

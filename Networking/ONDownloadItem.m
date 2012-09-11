@@ -16,12 +16,6 @@
 
 @implementation ONDownloadItem
 
-@synthesize url = _url;
-@synthesize cacheKey = _cacheKey;
-@synthesize priority = _priority;
-@synthesize retryCount = _retryCount;
-@synthesize maxRetryCount = _maxRetryCount;
-
 - (id)initWithURL:(NSURL *)url {
     return [self initWithURL:url andPriority:ONDownloadItem_Priority_Medium];
 }

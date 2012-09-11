@@ -54,20 +54,6 @@
 #pragma mark - Properties
 #pragma mark -
 
-@synthesize sampleImageView = _sampleImageView;
-@synthesize searchTextField = _searchTextField;
-@synthesize connectionsCountSegmentedControl = _connectionsCountSegmentedControl;
-@synthesize totalDownloadsLabel = _totalDownloadsLabel;
-@synthesize totalQueuedLabel = _totalQueuedLabel;
-@synthesize totalErrorsLabel = _totalErrorsLabel;
-@synthesize averageDownloadTimeLabel = _averageDownloadTimeLabel;
-@synthesize totalDownloadTimeLabel = _totalDownloadTimeLabel;
-
-@synthesize downloadDurations = _downloadDurations;
-
-@synthesize startTime;
-@synthesize endTime;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
