@@ -23,14 +23,23 @@ typedef NSUInteger ONDownloadItem_Priority;
 
 - (id)initWithURL:(NSURL *)url andPriority:(ONDownloadItem_Priority)priority;
 
-- (NSString *)cacheKey;
-
-@property (strong, nonatomic) NSURL *url;
+@property (copy, nonatomic) NSURL *url;
 @property (readonly, nonatomic) NSString *cacheKey;
 @property (assign, nonatomic) ONDownloadItem_Priority priority;
 @property (assign, nonatomic) NSUInteger retryCount;
 @property (assign, nonatomic) NSUInteger maxRetryCount;
 
-+ (void)addDownloadOperationWithURL:(NSURL *)url andPriority:(ONDownloadItem_Priority)priority andCategory:(NSString *)category withCompletionHandler:(ONNetworkOperationCompletionHandler)completionHandler;
++ (void)addDownloadOperationWithURL:(NSURL *)url
+                           priority:(ONDownloadItem_Priority)priority
+                           category:(NSString *)category
+                  completionHandler:(ONNetworkOperationCompletionHandler)completionHandler;
+
++ (void)addDownloadOperationWithURL:(NSURL *)url
+                           priority:(ONDownloadItem_Priority)priority
+                           category:(NSString *)category
+                  completionHandler:(ONNetworkOperationCompletionHandler)completionHandler
+                    progressHandler:(ONNetworkOperationProgressHandler)progressHandler;
+
++ (void)addDownloadOperationWithURL:(NSURL *)url andPriority:(ONDownloadItem_Priority)priority andCategory:(NSString *)category withCompletionHandler:(ONNetworkOperationCompletionHandler)completionHandler __attribute__ ((deprecated));
 
 @end

@@ -10,22 +10,21 @@
 
 @implementation OptimizedNetworkingTests
 
-- (void)setUp
-{
+- (void)setUp {
     [super setUp];
     
     // Set-up code here.
 }
 
-- (void)tearDown
-{
+- (void)tearDown {
     // Tear-down code here.
     
     [super tearDown];
 }
 
-- (void)testExample
-{
+// how can tests for async processes be tested?
+
+- (void)testExample {
     STFail(@"Unit tests are not implemented yet in OptimizedNetworkingTests");
 }
 

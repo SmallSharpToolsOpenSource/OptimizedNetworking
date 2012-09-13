@@ -15,6 +15,8 @@
 @property (strong, nonatomic) ONDownloadItem *downloadItem;
 
 - (id)initWithDownloadItem:(ONDownloadItem *)downloadItem;
-- (id)initWithDownloadItem:(ONDownloadItem *)downloadItem andCategory:(NSString *)category;
+- (id)initWithDownloadItem:(ONDownloadItem *)downloadItem category:(NSString *)category;
+
+- (id)initWithDownloadItem:(ONDownloadItem *)downloadItem andCategory:(NSString *)category __attribute__ ((deprecated));
 
 @end

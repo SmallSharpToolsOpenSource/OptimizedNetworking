@@ -16,6 +16,9 @@
 
 @implementation ONDownloadItem
 
+#pragma mark - Initializers
+#pragma mark -
+
 - (id)initWithURL:(NSURL *)url {
     return [self initWithURL:url andPriority:ONDownloadItem_Priority_Medium];
 }
@@ -29,6 +32,9 @@
     return self;
 }
 
+#pragma mark - Public Method
+#pragma mark -
+
 - (NSString *)cacheKey {
     if (self.url == nil) {
         return kEmptyCacheKey;
@@ -41,11 +47,44 @@
     return str;
 }
 
-+ (void)addDownloadOperationWithURL:(NSURL *)url andPriority:(ONDownloadItem_Priority)priority andCategory:(NSString *)category withCompletionHandler:(ONNetworkOperationCompletionHandler)completionHandler {
+#pragma mark - Static Methods
+#pragma mark -
+
++ (void)addDownloadOperationWithURL:(NSURL *)url
+                           priority:(ONDownloadItem_Priority)priority
+                           category:(NSString *)category
+                  completionHandler:(ONNetworkOperationCompletionHandler)completionHandler {
+    [ONDownloadItem addDownloadOperationWithURL:url
+                                       priority:priority
+                                       category:category
+                              completionHandler:completionHandler
+                                progressHandler:nil];
+}
+
++ (void)addDownloadOperationWithURL:(NSURL *)url
+                           priority:(ONDownloadItem_Priority)priority
+                           category:(NSString *)category
+                  completionHandler:(ONNetworkOperationCompletionHandler)completionHandler
+                    progressHandler:(ONNetworkOperationProgressHandler)progressHandler {
     ONDownloadItem *downloadItem = [[ONDownloadItem alloc] initWithURL:url];
     ONDownloadOperation *downloadOperation = [[ONDownloadOperation alloc] initWithDownloadItem:downloadItem];
     downloadOperation.completionHandler = completionHandler;
+    downloadOperation.progressHandler = progressHandler;
     [[ONNetworkManager sharedInstance] addOperation:downloadOperation];
+}
+
+#pragma mark - Deprecated
+#pragma mark -
+
++ (void)addDownloadOperationWithURL:(NSURL *)url
+                        andPriority:(ONDownloadItem_Priority)priority
+                        andCategory:(NSString *)category
+              withCompletionHandler:(ONNetworkOperationCompletionHandler)completionHandler {
+    [ONDownloadItem addDownloadOperationWithURL:url
+                                       priority:priority
+                                       category:category
+                              completionHandler:completionHandler
+                                progressHandler:nil];
 }
 
 @end

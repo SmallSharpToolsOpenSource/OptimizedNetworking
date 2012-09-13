@@ -31,6 +31,7 @@
 		26C9055D15B892200068666C /* ONHeadRequestOpertion.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9055C15B8921F0068666C /* ONHeadRequestOpertion.m */; };
 		26C9056215B8973B0068666C /* NSDate+InternetDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9056015B8973B0068666C /* NSDate+InternetDateTime.m */; };
 		26CD4C8C15B4F74600806048 /* ONFlickrPhotoSetParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 26CD4C8B15B4F74600806048 /* ONFlickrPhotoSetParser.m */; };
+		26E0A92516016B6900D537EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 26E0A92416016B6900D537EE /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		26C9056115B8973B0068666C /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Singleton.h; path = Common/Singleton.h; sourceTree = SOURCE_ROOT; };
 		26CD4C8A15B4F74500806048 /* ONFlickrPhotoSetParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONFlickrPhotoSetParser.h; sourceTree = "<group>"; };
 		26CD4C8B15B4F74600806048 /* ONFlickrPhotoSetParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONFlickrPhotoSetParser.m; sourceTree = "<group>"; };
+		26E0A92416016B6900D537EE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 		2605083715ACA7B000974E02 = {
 			isa = PBXGroup;
 			children = (
+				26E0A92416016B6900D537EE /* README.md */,
 				26C9050215B75F8F0068666C /* Default.png */,
 				26C9050015B75F870068666C /* Default@2x.png */,
 				26C904FE15B75E1D0068666C /* Icon.png */,
@@ -296,6 +299,7 @@
 				26C904FF15B75E1D0068666C /* Icon.png in Resources */,
 				26C9050115B75F870068666C /* Default@2x.png in Resources */,
 				26C9050315B75F8F0068666C /* Default.png in Resources */,
+				26E0A92516016B6900D537EE /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

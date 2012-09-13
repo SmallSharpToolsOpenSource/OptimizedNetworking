@@ -2,6 +2,8 @@
 //  ONNetworkOperation.m
 //  OptimizedNetworking
 //
+// Various bits borrowed from the AdvancedURLConnections sample project from Apple.
+//
 //  Created by Brennan Stehling on 7/10/12.
 //  Copyright (c) 2012 SmallSharpTools LLC. All rights reserved.
 //
@@ -16,6 +18,12 @@
 
 @property (strong, nonatomic) NSDate *operationStartDate;
 @property (strong, nonatomic) NSDate *operationEndDate;
+
+@property (assign, nonatomic) long long expectedContentLength;
+@property (assign, nonatomic) long long currentContentLength;
+
+@property (nonatomic, copy,   readwrite) NSString *filePath;
+@property (nonatomic, retain, readwrite) NSOutputStream *fileStream;
 
 - (BOOL)isCompleted;
 
@@ -121,6 +129,40 @@
     }
 }
 
+- (NSString *)pathForTemporaryFileWithPrefix:(NSString *)prefix {
+    NSString *  result;
+    CFUUIDRef   uuid;
+    CFStringRef uuidStr;
+    
+    assert(prefix != nil);
+    
+    uuid = CFUUIDCreate(NULL);
+    assert(uuid != NULL);
+    
+    uuidStr = CFUUIDCreateString(NULL, uuid);
+    assert(uuidStr != NULL);
+    
+    result = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@", prefix, uuidStr]];
+    assert(result != nil);
+    
+    CFRelease(uuidStr);
+    CFRelease(uuid);
+    
+    return result;
+}
+
+- (void)disposeResources {
+    if (self.connection != nil) {
+        [self.connection cancel];
+        self.connection = nil;
+    }
+    if (self.fileStream != nil) {
+        [self.fileStream close];
+        self.fileStream = nil;
+    }
+    self.filePath = nil;
+}
+
 #pragma mark - NSObject Overrides
 #pragma mark -
 
@@ -136,9 +178,15 @@
     
     assert(self.isActualRunLoopThread);
     
+    assert(self.filePath == nil);
+    assert(self.fileStream == nil);
+    
     // NOTE: Networking on the networking queue should not be happening on the main queue
     assert(dispatch_get_main_queue() != dispatch_get_current_queue());
-        
+    
+    self.filePath = [self pathForTemporaryFileWithPrefix:[self httpMethod]];
+    assert(self.filePath != nil);
+    
     // use the default cache policy to do the memory/disk caching
     NSMutableURLRequest *request = [NSMutableURLRequest 
                                     requestWithURL:self.url 
@@ -175,7 +223,7 @@
 - (void)cancelNetworkOperation {
     @synchronized (self) {
         self.operationEndDate = [NSDate date];
-        [self.connection cancel];
+        [self disposeResources];
         [[ONNetworkManager sharedInstance] didStopNetworking];
         [self changeStatus:ONNetworkOperation_Status_Cancelled];
     }
@@ -183,6 +231,7 @@
 
 - (void)failNetworkOperation {
     @synchronized (self) {
+        [self disposeResources];
         self.operationEndDate = [NSDate date];
         [[ONNetworkManager sharedInstance] didStopNetworking];
         [self changeStatus:ONNetworkOperation_Status_Finished];
@@ -192,10 +241,25 @@
 
 - (void)finishNetworkOperation {
     @synchronized (self) {
-        self.operationEndDate = [NSDate date];
-        [[ONNetworkManager sharedInstance] didStopNetworking];
-        [self changeStatus:ONNetworkOperation_Status_Finished];
-        self.completionHandler(self.receivedData, nil);
+        // return the data as NSData (possibly dangerous for large files)
+        NSError *error = nil;
+        NSData *fileData = [NSData dataWithContentsOfFile:self.filePath
+                                                  options:NSDataReadingMapped
+                                                    error:&error];
+        if (error != nil) {
+            self.error = error;
+            [self failNetworkOperation];
+        }
+        else {
+            assert(fileData != nil);
+            
+            self.operationEndDate = [NSDate date];
+            [[ONNetworkManager sharedInstance] didStopNetworking];
+            [self changeStatus:ONNetworkOperation_Status_Finished];
+            
+            self.completionHandler(fileData, nil);
+        }
+        [self disposeResources];
     }
 }
 
@@ -215,8 +279,8 @@
 
     self.operationStartDate = [NSDate date];
     [self changeStatus:ONNetworkOperation_Status_Executing];
-    
-    NSArray *modes = [NSArray arrayWithObject:NSDefaultRunLoopMode];
+
+    NSArray *modes = @[NSDefaultRunLoopMode];
     [self performSelector:@selector(startNetworkOperation) onThread:self.actualRunLoopThread withObject:nil waitUntilDone:NO modes:modes];
 }
 
@@ -281,24 +345,67 @@
         }
     }
     
-	long long contentLength = [response expectedContentLength];
-	if (contentLength == NSURLResponseUnknownLength) {
-		contentLength = 500000;
-	}
-	self.receivedData = [NSMutableData dataWithCapacity:(NSUInteger)contentLength];
+    self.fileStream = [NSOutputStream outputStreamToFileAtPath:self.filePath append:NO];
+    assert(self.fileStream != nil);
+    
+    [self.fileStream open];
+    
+    self. currentContentLength = 0;
+    
+	self.expectedContentLength = [response expectedContentLength];
 }
 
 - (void)connection:(NSURLConnection *)theConnection didReceiveData:(NSData *)data {
-    /* Append the new data to the received data. */
-    [self.receivedData appendData:data];
+    #pragma unused(theConnection)
+    NSInteger       dataLength;
+    const uint8_t * dataBytes;
+    NSInteger       bytesWritten;
+    NSInteger       bytesWrittenSoFar;
+    
+    assert(theConnection == self.connection);
+    
+    dataLength = [data length];
+    dataBytes  = [data bytes];
+    
+    self.currentContentLength += dataLength;
+    
+    bytesWrittenSoFar = 0;
+    do {
+        bytesWritten = [self.fileStream write:&dataBytes[bytesWrittenSoFar] maxLength:dataLength - bytesWrittenSoFar];
+        assert(bytesWritten != 0);
+        if (bytesWritten == -1) {
+            NSString *errorMessage = [NSString stringWithFormat:@"File write error (%@)", self.url];
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:errorMessage forKey:NSLocalizedDescriptionKey];
+            NSError *error = [NSError errorWithDomain:@"ONNetworkOperationErrorDomain"
+                                                 code:100
+                                             userInfo:userInfo];
+            self.error = error;
+            [self failNetworkOperation];
+            break;
+        } else {
+            bytesWrittenSoFar += bytesWritten;
+        }
+    } while (bytesWrittenSoFar != dataLength);
+    
+    // report progress (expected could be NSURLResponseUnknownLength)
+    if (self.progressHandler != nil) {
+        self.progressHandler(self.currentContentLength, self.expectedContentLength);
+    }
 }
 
 - (void)connection:(NSURLConnection *)theConnection didFailWithError:(NSError *)error {
+    #pragma unused(theConnection)
+    #pragma unused(error)
+    assert(theConnection == self.connection);
+    
     self.error = error;
     [self failNetworkOperation];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)theConnection {
+    #pragma unused(theConnection)
+    assert(theConnection == self.connection);
+    
     [self finishNetworkOperation];
 }
 

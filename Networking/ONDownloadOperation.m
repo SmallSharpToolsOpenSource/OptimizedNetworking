@@ -22,11 +22,14 @@
 
 @implementation ONDownloadOperation
 
+#pragma mark - Initializers
+#pragma mark -
+
 - (id)initWithDownloadItem:(ONDownloadItem *)downloadItem {
-    return [self initWithDownloadItem:downloadItem andCategory:@"Default"];
+    return [self initWithDownloadItem:downloadItem category:@"Default"];
 }
 
-- (id)initWithDownloadItem:(ONDownloadItem *)downloadItem andCategory:(NSString *)category {
+- (id)initWithDownloadItem:(ONDownloadItem *)downloadItem category:(NSString *)category {
     self = [super init];
     if (self != nil) {
         self.url = downloadItem.url;
@@ -45,6 +48,13 @@
         }
     }
     return self;
+}
+
+#pragma mark - Deprecated
+#pragma mark -
+
+- (id)initWithDownloadItem:(ONDownloadItem *)downloadItem andCategory:(NSString *)category {
+    return [self initWithDownloadItem:downloadItem category:category];
 }
 
 @end

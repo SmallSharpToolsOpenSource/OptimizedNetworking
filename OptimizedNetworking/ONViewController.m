@@ -191,6 +191,15 @@
                 [self updateUI];
             });
         }];
+        [operation setProgressHandler:^(long long currentContentLength, long long expectedContentLength) {
+            if (expectedContentLength == NSURLResponseUnknownLength) {
+                DebugLog(@"Downloaded %lld of unknown length", currentContentLength);
+            }
+            else {
+                DebugLog(@"Downloaded %lld of %lld", currentContentLength, expectedContentLength);
+            }
+            
+        }];
         
         [downloadOperations addObject:operation];
     }

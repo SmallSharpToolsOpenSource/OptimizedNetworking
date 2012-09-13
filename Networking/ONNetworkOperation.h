@@ -20,6 +20,7 @@ enum {
 typedef NSUInteger ONNetworkOperation_Status;
 
 typedef void (^ONNetworkOperationCompletionHandler)(NSData *data, NSError *error);
+typedef void (^ONNetworkOperationProgressHandler)(long long currentContentLength, long long expectedContentLength);
 
 @interface ONNetworkOperation : NSOperation
 
@@ -28,16 +29,16 @@ typedef void (^ONNetworkOperationCompletionHandler)(NSData *data, NSError *error
 @property (readonly, assign) BOOL isActualRunLoopThread; // YES if the current thread is the actual run loop thread
 
 @property (copy, nonatomic) ONNetworkOperationCompletionHandler completionHandler;
+@property (copy, nonatomic) ONNetworkOperationProgressHandler progressHandler;
 @property (retain, nonatomic) NSURLConnection *connection;
 @property (readonly) NSString *httpMethod;
 
 
-@property (strong, nonatomic) NSURL *url;
-@property (strong, nonatomic) NSString *category;
+@property (copy, nonatomic) NSURL *url;
+@property (copy, nonatomic) NSString *category;
 @property (assign, nonatomic) ONNetworkOperation_Status status;
 @property (strong, nonatomic) NSError *error;
 @property (strong, nonatomic) NSHTTPURLResponse *response;
-@property (strong, nonatomic) NSMutableData *receivedData;
 
 - (void)changeStatus:(ONNetworkOperation_Status)status;
 - (NSTimeInterval)operationDuration;
