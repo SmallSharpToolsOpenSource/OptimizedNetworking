@@ -182,7 +182,7 @@
     assert(self.fileStream == nil);
     
     // NOTE: Networking on the networking queue should not be happening on the main queue
-    assert(dispatch_get_main_queue() != dispatch_get_current_queue());
+//    assert(dispatch_get_main_queue() != dispatch_get_current_queue());
     
     self.filePath = [self pathForTemporaryFileWithPrefix:[self httpMethod]];
     assert(self.filePath != nil);
