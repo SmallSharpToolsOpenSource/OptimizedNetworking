@@ -66,25 +66,11 @@
                            category:(NSString *)category
                   completionHandler:(ONNetworkOperationCompletionHandler)completionHandler
                     progressHandler:(ONNetworkOperationProgressHandler)progressHandler {
-    ONDownloadItem *downloadItem = [[ONDownloadItem alloc] initWithURL:url];
-    ONDownloadOperation *downloadOperation = [[ONDownloadOperation alloc] initWithDownloadItem:downloadItem];
+    ONDownloadItem *downloadItem = [[ONDownloadItem alloc] initWithURL:url andPriority:priority];
+    ONDownloadOperation *downloadOperation = [[ONDownloadOperation alloc] initWithDownloadItem:downloadItem category:category];
     downloadOperation.completionHandler = completionHandler;
     downloadOperation.progressHandler = progressHandler;
     [[ONNetworkManager sharedInstance] addOperation:downloadOperation];
-}
-
-#pragma mark - Deprecated
-#pragma mark -
-
-+ (void)addDownloadOperationWithURL:(NSURL *)url
-                        andPriority:(ONDownloadItem_Priority)priority
-                        andCategory:(NSString *)category
-              withCompletionHandler:(ONNetworkOperationCompletionHandler)completionHandler {
-    [ONDownloadItem addDownloadOperationWithURL:url
-                                       priority:priority
-                                       category:category
-                              completionHandler:completionHandler
-                                progressHandler:nil];
 }
 
 @end

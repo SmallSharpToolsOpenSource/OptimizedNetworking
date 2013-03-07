@@ -40,6 +40,4 @@ typedef NSUInteger ONDownloadItem_Priority;
                   completionHandler:(ONNetworkOperationCompletionHandler)completionHandler
                     progressHandler:(ONNetworkOperationProgressHandler)progressHandler;
 
-+ (void)addDownloadOperationWithURL:(NSURL *)url andPriority:(ONDownloadItem_Priority)priority andCategory:(NSString *)category withCompletionHandler:(ONNetworkOperationCompletionHandler)completionHandler __attribute__ ((deprecated));
-
 @end

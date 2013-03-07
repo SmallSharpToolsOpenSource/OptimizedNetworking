@@ -33,6 +33,7 @@
 		26C9056215B8973B0068666C /* NSDate+InternetDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9056015B8973B0068666C /* NSDate+InternetDateTime.m */; };
 		26CD4C8C15B4F74600806048 /* ONFlickrPhotoSetParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 26CD4C8B15B4F74600806048 /* ONFlickrPhotoSetParser.m */; };
 		26E0A92516016B6900D537EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 26E0A92416016B6900D537EE /* README.md */; };
+		26EE0A2A16E80EEC001E073F /* ONHttpPostOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 26EE0A2916E80EEB001E073F /* ONHttpPostOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,8 @@
 		26CD4C8A15B4F74500806048 /* ONFlickrPhotoSetParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONFlickrPhotoSetParser.h; sourceTree = "<group>"; };
 		26CD4C8B15B4F74600806048 /* ONFlickrPhotoSetParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONFlickrPhotoSetParser.m; sourceTree = "<group>"; };
 		26E0A92416016B6900D537EE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		26EE0A2816E80EEB001E073F /* ONHttpPostOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONHttpPostOperation.h; sourceTree = "<group>"; };
+		26EE0A2916E80EEB001E073F /* ONHttpPostOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONHttpPostOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +223,8 @@
 				26C9053B15B85D400068666C /* ONDownloadItem.m */,
 				26C9055B15B8921F0068666C /* ONHeadRequestOpertion.h */,
 				26C9055C15B8921F0068666C /* ONHeadRequestOpertion.m */,
+				26EE0A2816E80EEB001E073F /* ONHttpPostOperation.h */,
+				26EE0A2916E80EEB001E073F /* ONHttpPostOperation.m */,
 			);
 			path = Networking;
 			sourceTree = SOURCE_ROOT;
@@ -348,6 +353,7 @@
 				26C9054715B85D400068666C /* ONNetworkOperation.m in Sources */,
 				26C9055D15B892200068666C /* ONHeadRequestOpertion.m in Sources */,
 				26C9056215B8973B0068666C /* NSDate+InternetDateTime.m in Sources */,
+				26EE0A2A16E80EEC001E073F /* ONHttpPostOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -50,11 +50,4 @@
     return self;
 }
 
-#pragma mark - Deprecated
-#pragma mark -
-
-- (id)initWithDownloadItem:(ONDownloadItem *)downloadItem andCategory:(NSString *)category {
-    return [self initWithDownloadItem:downloadItem category:category];
-}
-
 @end
