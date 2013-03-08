@@ -235,7 +235,11 @@
         self.operationEndDate = [NSDate date];
         [[ONNetworkManager sharedInstance] didStopNetworking];
         [self changeStatus:ONNetworkOperation_Status_Finished];
-        self.completionHandler(nil, self.error);
+        if (self.completionHandler != nil) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.completionHandler(nil, self.error);
+            });
+        }
     }
 }
 
@@ -257,7 +261,11 @@
             [[ONNetworkManager sharedInstance] didStopNetworking];
             [self changeStatus:ONNetworkOperation_Status_Finished];
             
-            self.completionHandler(fileData, nil);
+            if (self.completionHandler != nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.completionHandler(fileData, nil);
+                });
+            }
         }
         [self disposeResources];
     }
@@ -389,7 +397,9 @@
     
     // report progress (expected could be NSURLResponseUnknownLength)
     if (self.progressHandler != nil) {
-        self.progressHandler(self.currentContentLength, self.expectedContentLength);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.progressHandler(self.currentContentLength, self.expectedContentLength);
+        });
     }
 }
 
