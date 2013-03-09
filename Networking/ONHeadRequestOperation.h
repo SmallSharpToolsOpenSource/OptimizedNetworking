@@ -10,7 +10,7 @@
 
 typedef void (^ONHeadRequestOperationCompletionHandler)(NSDictionary *dictionary, NSError *error);
 
-@interface ONHeadRequestOpertion : ONNetworkOperation
+@interface ONHeadRequestOperation : ONNetworkOperation
 
 @property (copy, nonatomic) ONHeadRequestOperationCompletionHandler headRequestCompletionHandler;
 

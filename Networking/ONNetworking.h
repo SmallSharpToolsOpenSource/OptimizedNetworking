@@ -11,5 +11,5 @@
 #import "ONDownloadItem.h"
 #import "ONNetworkOperation.h"
 #import "ONDownloadOperation.h"
-#import "ONHeadRequestOpertion.h"
+#import "ONHeadRequestOperation.h"
 #import "ONHttpPostOperation.h"

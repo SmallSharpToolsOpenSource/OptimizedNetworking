@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 SmallSharpTools LLC. All rights reserved.
 //
 
-#import "ONHeadRequestOpertion.h"
+#import "ONHeadRequestOperation.h"
 
 #import "ONNetworkManager.h"
 #import "NSDate+InternetDateTime.h"
 
-@implementation ONHeadRequestOpertion
+@implementation ONHeadRequestOperation
 
 - (NSString *)httpMethod {
     return @"HEAD";
@@ -80,7 +80,7 @@
 }
 
 + (void)addHeadRquestOperationWithURL:(NSURL *)url withHeadRequestCompletionHandler:(ONHeadRequestOperationCompletionHandler)headRequestCompletionHandler {
-    ONHeadRequestOpertion *operation = [[ONHeadRequestOpertion alloc] init];
+    ONHeadRequestOperation *operation = [[ONHeadRequestOperation alloc] init];
     operation.url = url;
     operation.headRequestCompletionHandler = headRequestCompletionHandler;
     operation.completionHandler = ^(NSData *data, NSError *error) {}; // do nothing
