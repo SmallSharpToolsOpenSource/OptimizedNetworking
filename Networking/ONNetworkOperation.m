@@ -134,16 +134,16 @@
     CFUUIDRef   uuid;
     CFStringRef uuidStr;
     
-    assert(prefix != nil);
+    NSAssert(prefix != nil, @"Invalid State");
     
     uuid = CFUUIDCreate(NULL);
-    assert(uuid != NULL);
+    NSAssert(uuid != NULL, @"Invalid State");
     
     uuidStr = CFUUIDCreateString(NULL, uuid);
-    assert(uuidStr != NULL);
+    NSAssert(uuidStr != NULL, @"Invalid State");
     
     result = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@", prefix, uuidStr]];
-    assert(result != nil);
+    NSAssert(result != nil, @"Invalid State");
     
     CFRelease(uuidStr);
     CFRelease(uuid);
@@ -176,16 +176,16 @@
 - (void)startNetworkOperation {
     // meant to be overridden
     
-    assert(self.isActualRunLoopThread);
+    NSAssert(self.isActualRunLoopThread, @"Invalid State");
     
-    assert(self.filePath == nil);
-    assert(self.fileStream == nil);
+    NSAssert(self.filePath == nil, @"Invalid State");
+    NSAssert(self.fileStream == nil, @"Invalid State");
     
     // NOTE: Networking on the networking queue should not be happening on the main queue
-//    assert(dispatch_get_main_queue() != dispatch_get_current_queue());
+    NSAssert(![NSThread isMainThread], @"Invalid State");
     
     self.filePath = [self pathForTemporaryFileWithPrefix:[self httpMethod]];
-    assert(self.filePath != nil);
+    NSAssert(self.filePath != nil, @"Invalid State");
     
     // use the default cache policy to do the memory/disk caching
     NSMutableURLRequest *request = [NSMutableURLRequest 
@@ -251,7 +251,7 @@
             [self failNetworkOperation];
         }
         else {
-            assert(fileData != nil);
+            NSAssert(fileData != nil, @"Invalid State");
             
             self.operationEndDate = [NSDate date];
             [[ONNetworkManager sharedInstance] didStopNetworking];
@@ -273,9 +273,9 @@
 - (void)start {
     [super start];
     
-    assert(![self isCompleted]);
-    assert([self.actualRunLoopThread isExecuting]);
-    assert(![self.actualRunLoopThread isCancelled]);
+    NSAssert(![self isCompleted], @"Invalid State");
+    NSAssert([self.actualRunLoopThread isExecuting], @"Invalid State");
+    NSAssert(![self.actualRunLoopThread isCancelled], @"Invalid State");
 
     self.operationStartDate = [NSDate date];
     [self changeStatus:ONNetworkOperation_Status_Executing];
@@ -346,7 +346,7 @@
     }
     
     self.fileStream = [NSOutputStream outputStreamToFileAtPath:self.filePath append:NO];
-    assert(self.fileStream != nil);
+    NSAssert(self.fileStream != nil, @"Invalid State");
     
     [self.fileStream open];
     
@@ -362,7 +362,7 @@
     NSInteger       bytesWritten;
     NSInteger       bytesWrittenSoFar;
     
-    assert(theConnection == self.connection);
+    NSAssert(theConnection == self.connection, @"Invalid State");
     
     dataLength = [data length];
     dataBytes  = [data bytes];
@@ -372,7 +372,7 @@
     bytesWrittenSoFar = 0;
     do {
         bytesWritten = [self.fileStream write:&dataBytes[bytesWrittenSoFar] maxLength:dataLength - bytesWrittenSoFar];
-        assert(bytesWritten != 0);
+        NSAssert(bytesWritten != 0, @"Invalid State");
         if (bytesWritten == -1) {
             NSString *errorMessage = [NSString stringWithFormat:@"File write error (%@)", self.url];
             NSDictionary *userInfo = [NSDictionary dictionaryWithObject:errorMessage forKey:NSLocalizedDescriptionKey];
@@ -396,7 +396,7 @@
 - (void)connection:(NSURLConnection *)theConnection didFailWithError:(NSError *)error {
     #pragma unused(theConnection)
     #pragma unused(error)
-    assert(theConnection == self.connection);
+    NSAssert(theConnection == self.connection, @"Invalid State");
     
     self.error = error;
     [self failNetworkOperation];
@@ -404,7 +404,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)theConnection {
     #pragma unused(theConnection)
-    assert(theConnection == self.connection);
+    NSAssert(theConnection == self.connection, @"Invalid State");
     
     [self finishNetworkOperation];
 }

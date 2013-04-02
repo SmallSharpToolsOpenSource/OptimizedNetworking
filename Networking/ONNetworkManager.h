@@ -16,7 +16,7 @@
 
 SYNTHESIZE_SINGLETON_FOR_HEADER(ONNetworkManager);
 
-- (void)setMaxConcurrentOperationCount:(NSUInteger)maxCount;
+- (void)setMaxConcurrentOperationCount:(NSInteger)maxCount;
 - (void)addOperations:(NSArray *)operations;
 - (void)addOperation:(ONNetworkOperation *)operation;
 - (void)cancelOperation:(ONNetworkOperation *)operation;

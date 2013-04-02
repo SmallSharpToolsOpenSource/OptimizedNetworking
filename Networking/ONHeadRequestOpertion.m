@@ -28,7 +28,7 @@
         }
         else {
             // a non-HTTP response will fail the following assertion
-            assert(self.response != nil);
+            NSAssert(self.response != nil, @"Invalid State");
             
             // parse header values from response and build dictionary to return
             

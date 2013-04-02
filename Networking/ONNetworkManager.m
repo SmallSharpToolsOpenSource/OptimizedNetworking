@@ -21,11 +21,6 @@
 
 // Look into ASIHTTPRequest - http://allseeing-i.com/ASIHTTPRequest/
 
-#pragma mark - Constants
-#pragma mark -
-
-#define kDefaultMaxConcurrentOperationCount    8
-
 #pragma mark - Class Extension
 #pragma mark -
 
@@ -56,7 +51,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
     self = [super init];
     if (self != nil) {
         self.networkQueue = [[NSOperationQueue alloc] init];
-        self.networkQueue.maxConcurrentOperationCount = kDefaultMaxConcurrentOperationCount;
+        self.networkQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
         self.operations = [NSMutableArray array];
         self.queuedCount = 0;
         
@@ -64,7 +59,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
         // contribute to main thread latency.  Create and configure that thread.
         
         self.networkRunLoopThread = [[NSThread alloc] initWithTarget:self selector:@selector(networkRunLoopThreadEntry) object:nil];
-        assert(self.networkRunLoopThread != nil);
+        NSAssert(self.networkRunLoopThread != nil, @"Invalid State");
         
         [self.networkRunLoopThread setName:@"networkRunLoopThread"];
         if ( [self.networkRunLoopThread respondsToSelector:@selector(setThreadPriority)] ) {
@@ -78,19 +73,19 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
 
 // This thread runs all of our network operation run loop callbacks.
 - (void)networkRunLoopThreadEntry {
-    assert( ! [NSThread isMainThread] );
+    NSAssert(![NSThread isMainThread], @"Invalid State");
     while (YES) {
         @autoreleasepool {
             [[NSRunLoop currentRunLoop] run];
         }
     }
-    assert(NO);
+    NSAssert(NO, @"Invalid State");
 }
 
 #pragma mark - Implementation
 #pragma mark -
 
-- (void)setMaxConcurrentOperationCount:(NSUInteger)maxCount {
+- (void)setMaxConcurrentOperationCount:(NSInteger)maxCount {
     self.networkQueue.maxConcurrentOperationCount = maxCount;
 }
 
@@ -107,9 +102,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
     @synchronized(self) {
         
         // ensure the NSRunLoop thread is running
-        assert([self.networkRunLoopThread isExecuting]);
-        assert(![self.networkRunLoopThread isFinished]);
-        assert(![self.networkRunLoopThread isCancelled]);
+        NSAssert([self.networkRunLoopThread isExecuting], @"Invalid State");
+        NSAssert(![self.networkRunLoopThread isFinished], @"Invalid State");
+        NSAssert(![self.networkRunLoopThread isCancelled], @"Invalid State");
         
         [self.operations addObject:operation];
         
@@ -122,7 +117,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
             }
         }];
         
-        assert([operation respondsToSelector:@selector(setRunLoopThread:)]);
+        NSAssert([operation respondsToSelector:@selector(setRunLoopThread:)], @"Invalid State");
         
         if ([operation respondsToSelector:@selector(setRunLoopThread:)]) {
             if ( [(id)operation runLoopThread] == nil ) {

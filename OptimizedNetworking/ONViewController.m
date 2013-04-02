@@ -31,14 +31,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalErrorsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *averageDownloadTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalDownloadTimeLabel;
+@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 
 @property (strong, nonatomic) NSMutableArray *downloadDurations;
 
 @property (strong, nonatomic) NSDate *startTime;
 @property (strong, nonatomic) NSDate *endTime;
-
-- (IBAction)connectionsCountValueChanged:(id)sender;
-- (IBAction)startDownloadsTapped:(id)sender;
 
 - (void)downloadFlickrSearch;
 
@@ -69,6 +67,7 @@
         }
     }];
     
+    self.progressView.hidden = TRUE;
 }
 
 - (void)viewDidUnload {
@@ -87,6 +86,7 @@
     [self setStartTime:nil];
     [self setEndTime:nil];
     
+    [self setProgressView:nil];
     [super viewDidUnload];
 }
 
@@ -169,6 +169,8 @@
         ONDownloadOperation *operation = [[ONDownloadOperation alloc] initWithDownloadItem:downloadItem];
         __weak ONDownloadOperation *weakOperation = operation;
         [operation setCompletionHandler:^(NSData *data, NSError *error) {
+            self.progressView.hidden = FALSE;
+            self.progressView.progress = 0.0;
             [self.downloadDurations addObject:[NSNumber numberWithFloat:[weakOperation operationDuration]]];
             
             if (error != nil) {
@@ -178,6 +180,7 @@
             else {
                 // change the data into an image and display it to show progress
                 UIImage *image = [UIImage imageWithData:data];
+                self.sampleImageView.contentMode = UIViewContentModeScaleAspectFit;
                 self.sampleImageView.image = image;
             }
             
@@ -196,9 +199,8 @@
                 DebugLog(@"Downloaded %lld of unknown length", currentContentLength);
             }
             else {
-                DebugLog(@"Downloaded %lld of %lld", currentContentLength, expectedContentLength);
+                self.progressView.progress = currentContentLength / expectedContentLength;
             }
-            
         }];
         
         [downloadOperations addObject:operation];
@@ -227,6 +229,10 @@
             
             CGFloat totalDuration = [self.endTime timeIntervalSinceDate:self.startTime];
             self.totalDownloadTimeLabel.text = [NSString stringWithFormat:@"%3.2f", totalDuration];
+            
+            if ([[ONNetworkManager sharedInstance] operationsCount] == 0) {
+                self.progressView.hidden = TRUE;
+            }
         }
     });
 }
@@ -268,19 +274,19 @@
     
     switch (self.connectionsCountSegmentedControl.selectedSegmentIndex) {
         case 0:
-            connectionsCount = 1;
+            connectionsCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
             break;
         case 1:
-            connectionsCount = 2;
+            connectionsCount = 1;
             break;
         case 2:
-            connectionsCount = 4;
+            connectionsCount = 2;
             break;
         case 3:
-            connectionsCount = 8;
+            connectionsCount = 4;
             break;
         case 4:
-            connectionsCount = 16;
+            connectionsCount = 8;
             break;
             
         default:
