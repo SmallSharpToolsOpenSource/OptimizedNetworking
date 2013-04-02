@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 SmallSharpTools LLC. All rights reserved.
 //
 
-#import "ONHeadRequestOpertion.h"
+#import "ONHeadRequestOperation.h"
 
 #import "ONNetworkManager.h"
 #import "NSDate+InternetDateTime.h"
 
-@implementation ONHeadRequestOpertion
+@implementation ONHeadRequestOperation
 
 - (NSString *)httpMethod {
     return @"HEAD";
@@ -24,7 +24,11 @@
         // assemble dictionary and call headRequestCompletionHandler
         
         if (self.error != nil) {
-            self.headRequestCompletionHandler(nil, self.error);
+            if (self.headRequestCompletionHandler != nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.headRequestCompletionHandler(nil, self.error);
+                });
+            }
         }
         else {
             // a non-HTTP response will fail the following assertion
@@ -66,14 +70,17 @@
             NSUInteger contentLength = [[[response allHeaderFields] objectForKey:@"Content-Length"] intValue];
             [dict setValue:[NSNumber numberWithInt:contentLength] forKey:@"contentLength"];
             
-            self.headRequestCompletionHandler(dict, nil);
+            if (self.headRequestCompletionHandler != nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.headRequestCompletionHandler(dict, nil);
+                });
+            }
         }
     }
 }
 
 + (void)addHeadRquestOperationWithURL:(NSURL *)url withHeadRequestCompletionHandler:(ONHeadRequestOperationCompletionHandler)headRequestCompletionHandler {
-    
-    ONHeadRequestOpertion *operation = [[ONHeadRequestOpertion alloc] init];
+    ONHeadRequestOperation *operation = [[ONHeadRequestOperation alloc] init];
     operation.url = url;
     operation.headRequestCompletionHandler = headRequestCompletionHandler;
     operation.completionHandler = ^(NSData *data, NSError *error) {}; // do nothing
