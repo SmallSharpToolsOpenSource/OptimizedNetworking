@@ -20,6 +20,7 @@
 		2605086715ACA7B100974E02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2605084815ACA7B000974E02 /* Foundation.framework */; };
 		2605086F15ACA7B100974E02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2605086D15ACA7B100974E02 /* InfoPlist.strings */; };
 		2605087215ACA7B100974E02 /* OptimizedNetworkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2605087115ACA7B100974E02 /* OptimizedNetworkingTests.m */; };
+		2639364A170B583E008DDECD /* ONHeadRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 26393649170B583E008DDECD /* ONHeadRequestOperation.m */; };
 		267046E41603E9B200869833 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 267046E31603E9B200869833 /* Default-568h@2x.png */; };
 		26C904FC15B75E180068666C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26C904FB15B75E180068666C /* Icon@2x.png */; };
 		26C904FF15B75E1D0068666C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26C904FE15B75E1D0068666C /* Icon.png */; };
@@ -29,7 +30,6 @@
 		26C9054515B85D400068666C /* ONDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9053D15B85D400068666C /* ONDownloadOperation.m */; };
 		26C9054615B85D400068666C /* ONNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9054015B85D400068666C /* ONNetworkManager.m */; };
 		26C9054715B85D400068666C /* ONNetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9054215B85D400068666C /* ONNetworkOperation.m */; };
-		26C9055D15B892200068666C /* ONHeadRequestOpertion.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9055C15B8921F0068666C /* ONHeadRequestOpertion.m */; };
 		26C9056215B8973B0068666C /* NSDate+InternetDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9056015B8973B0068666C /* NSDate+InternetDateTime.m */; };
 		26CD4C8C15B4F74600806048 /* ONFlickrPhotoSetParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 26CD4C8B15B4F74600806048 /* ONFlickrPhotoSetParser.m */; };
 		26E0A92516016B6900D537EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 26E0A92416016B6900D537EE /* README.md */; };
@@ -66,6 +66,8 @@
 		2605086E15ACA7B100974E02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2605087015ACA7B100974E02 /* OptimizedNetworkingTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptimizedNetworkingTests.h; sourceTree = "<group>"; };
 		2605087115ACA7B100974E02 /* OptimizedNetworkingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptimizedNetworkingTests.m; sourceTree = "<group>"; };
+		26393648170B583E008DDECD /* ONHeadRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONHeadRequestOperation.h; sourceTree = "<group>"; };
+		26393649170B583E008DDECD /* ONHeadRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONHeadRequestOperation.m; sourceTree = "<group>"; };
 		267046E31603E9B200869833 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		26C904FB15B75E180068666C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		26C904FE15B75E1D0068666C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -80,8 +82,6 @@
 		26C9054015B85D400068666C /* ONNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONNetworkManager.m; sourceTree = "<group>"; };
 		26C9054115B85D400068666C /* ONNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONNetworkOperation.h; sourceTree = "<group>"; };
 		26C9054215B85D400068666C /* ONNetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONNetworkOperation.m; sourceTree = "<group>"; };
-		26C9055B15B8921F0068666C /* ONHeadRequestOpertion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONHeadRequestOpertion.h; sourceTree = "<group>"; };
-		26C9055C15B8921F0068666C /* ONHeadRequestOpertion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONHeadRequestOpertion.m; sourceTree = "<group>"; };
 		26C9055F15B8973B0068666C /* NSDate+InternetDateTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+InternetDateTime.h"; path = "Common/NSDate+InternetDateTime.h"; sourceTree = SOURCE_ROOT; };
 		26C9056015B8973B0068666C /* NSDate+InternetDateTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+InternetDateTime.m"; path = "Common/NSDate+InternetDateTime.m"; sourceTree = SOURCE_ROOT; };
 		26C9056115B8973B0068666C /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Singleton.h; path = Common/Singleton.h; sourceTree = SOURCE_ROOT; };
@@ -213,6 +213,8 @@
 			isa = PBXGroup;
 			children = (
 				26C9053E15B85D400068666C /* ONNetworking.h */,
+				26393648170B583E008DDECD /* ONHeadRequestOperation.h */,
+				26393649170B583E008DDECD /* ONHeadRequestOperation.m */,
 				26C9053F15B85D400068666C /* ONNetworkManager.h */,
 				26C9054015B85D400068666C /* ONNetworkManager.m */,
 				26C9054115B85D400068666C /* ONNetworkOperation.h */,
@@ -221,8 +223,6 @@
 				26C9053D15B85D400068666C /* ONDownloadOperation.m */,
 				26C9053A15B85D400068666C /* ONDownloadItem.h */,
 				26C9053B15B85D400068666C /* ONDownloadItem.m */,
-				26C9055B15B8921F0068666C /* ONHeadRequestOpertion.h */,
-				26C9055C15B8921F0068666C /* ONHeadRequestOpertion.m */,
 				26EE0A2816E80EEB001E073F /* ONHttpPostOperation.h */,
 				26EE0A2916E80EEB001E073F /* ONHttpPostOperation.m */,
 			);
@@ -351,9 +351,9 @@
 				26C9054515B85D400068666C /* ONDownloadOperation.m in Sources */,
 				26C9054615B85D400068666C /* ONNetworkManager.m in Sources */,
 				26C9054715B85D400068666C /* ONNetworkOperation.m in Sources */,
-				26C9055D15B892200068666C /* ONHeadRequestOpertion.m in Sources */,
 				26C9056215B8973B0068666C /* NSDate+InternetDateTime.m in Sources */,
 				26EE0A2A16E80EEC001E073F /* ONHttpPostOperation.m in Sources */,
+				2639364A170B583E008DDECD /* ONHeadRequestOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

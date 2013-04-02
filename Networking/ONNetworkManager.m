@@ -19,7 +19,7 @@
 // differently than XML and other downloads because they take longer to download and will be
 // stored using EGOCache.
 
-// Look into ASIHTTPRequest - http://allseeing-i.com/ASIHTTPRequest/
+// Look into AFNetworking - https://github.com/AFNetworking/AFNetworking
 
 #pragma mark - Class Extension
 #pragma mark -
