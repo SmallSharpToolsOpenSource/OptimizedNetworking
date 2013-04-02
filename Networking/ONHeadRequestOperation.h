@@ -14,6 +14,6 @@ typedef void (^ONHeadRequestOperationCompletionHandler)(NSDictionary *dictionary
 
 @property (copy, nonatomic) ONHeadRequestOperationCompletionHandler headRequestCompletionHandler;
 
-+ (void)addHeadRquestOperationWithURL:(NSURL *)url withHeadRequestCompletionHandler:(ONHeadRequestOperationCompletionHandler)headRequestCompletionHandler;
++ (void)addHeadRequestOperationWithURL:(NSURL *)url withHeadRequestCompletionHandler:(ONHeadRequestOperationCompletionHandler)headRequestCompletionHandler;
 
 @end

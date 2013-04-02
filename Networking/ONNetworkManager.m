@@ -172,7 +172,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
 + (NSArray *)sortOperations:(NSArray *)operations {
     // sort by status (waiting, queued, finished), priority, category
     NSArray *sorted = [operations sortedArrayUsingComparator: ^(id obj1, id obj2) {
-        if ([obj1 isKindOfClass:[ONNetworkOperation class]] && [obj1 isKindOfClass:[ONNetworkOperation class]]) {
+        if ([obj1 isKindOfClass:[ONNetworkOperation class]] && [obj2 isKindOfClass:[ONNetworkOperation class]]) {
             ONNetworkOperation *op1 = (ONNetworkOperation *)obj1;
             ONNetworkOperation *op2 = (ONNetworkOperation *)obj2;
             
@@ -182,7 +182,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
             
             if (result != NSOrderedSame) {
                 if ([obj1 isKindOfClass:[ONDownloadOperation class]] && 
-                    [obj1 isKindOfClass:[ONDownloadOperation class]]) {
+                    [obj2 isKindOfClass:[ONDownloadOperation class]]) {
                     ONDownloadOperation *dop1 = (ONDownloadOperation *)op1;
                     ONDownloadOperation *dop2 = (ONDownloadOperation *)op2;
                     

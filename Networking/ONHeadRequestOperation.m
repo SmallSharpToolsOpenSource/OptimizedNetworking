@@ -79,7 +79,7 @@
     }
 }
 
-+ (void)addHeadRquestOperationWithURL:(NSURL *)url withHeadRequestCompletionHandler:(ONHeadRequestOperationCompletionHandler)headRequestCompletionHandler {
++ (void)addHeadRequestOperationWithURL:(NSURL *)url withHeadRequestCompletionHandler:(ONHeadRequestOperationCompletionHandler)headRequestCompletionHandler {
     ONHeadRequestOperation *operation = [[ONHeadRequestOperation alloc] init];
     operation.url = url;
     operation.headRequestCompletionHandler = headRequestCompletionHandler;

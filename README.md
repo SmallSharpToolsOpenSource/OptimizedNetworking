@@ -7,16 +7,16 @@ OptimizedNetworking
 
 This project is meant to provide a simple way to optimize networking with a focus on using NSOperationQueue
 versus simply using the async API of NSURLConnection or using GCD to offload work to a secondary queue which
-has less control over the number of concurrent connections and cancellations. Batch downloads of multiple
+has less control over the number of concurrent connections and the ability to cancel. Batch downloads of multiple
 files (images) is the focus of this project initially with potential updates to focus on API communications
 with retries and resume operations.
 
-Reference projects include MVCNetworking and ASIHTTPRequest. These projects have a different focus and have
+Reference projects include MVCNetworking and AFNetworking. These projects have a different focus and have
 a much broader scope which makes them harder to understand. With Optimized Networking my goal is to understand
 the different performance realities with NSOperationQueue and GCD with the number of allowed concurrent
 operations. Based on WWDC 2010 session 207 and 208 it has been preferred to use NSOperationQueue while GCD
-may be ready to be used when it is ready. Is it ready? What can be done about limiting connections? What about
-cancellation? What about priorities?
+may be ready to be used after GCD has matured more. Is it ready? What can be done about limiting connections?
+What about cancellation? What about priorities?
 
 The download operations work with a DownloadItem object which is given a priority which translates into a 
 priority on the queue. It also influences the sort of the operations before they are added to the networking
@@ -28,7 +28,7 @@ which is able to trigger all downloads to be cancelled immediately. This is a br
 more precise with categories and prioritizing downloads.
 
 * [MVCNetworking Sample Project](http://developer.apple.com/library/ios/#samplecode/MVCNetworking/Introduction/Intro.html)
-* [ASIHTTPRequest Project](http://allseeing-i.com/ASIHTTPRequest/)
+* [AFNetworking Project](https://github.com/AFNetworking/AFNetworking)
 
 ### Questions
 
