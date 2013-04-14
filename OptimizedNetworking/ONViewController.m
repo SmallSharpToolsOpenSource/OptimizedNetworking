@@ -58,7 +58,7 @@
     
     self.downloadDurations = [NSMutableArray array];
     
-    [ONHeadRequestOperation addHeadRquestOperationWithURL:[NSURL URLWithString:@"http://www.apple.com/robots.txt"] withHeadRequestCompletionHandler:^(NSDictionary *dictionary, NSError *error) {
+    [ONHeadRequestOperation addHeadRequestOperationWithURL:[NSURL URLWithString:@"http://www.apple.com/robots.txt"] withHeadRequestCompletionHandler:^(NSDictionary *dictionary, NSError *error) {
         if (error != nil) {
             DebugLog(@"Error: %@", error);
         }
