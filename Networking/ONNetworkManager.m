@@ -12,10 +12,10 @@
 #import "ONDownloadOperation.h"
 
 // NOTES
-// A download queue will regulate downloads. DownloadOperations will be added to the queue
+// A download queue will regulate downloads. Download operations will be added to the queue
 // and counted as they are in progress and new items will be added based on priority.
 // A list of downloads will be downloaded at times and should be downloaded in the background
-// with the ability for priority items to skip ahead of the line. Images will be handled 
+// with the ability for priority items to skip ahead of the line. Images will be handled
 // differently than XML and other downloads because they take longer to download and will be
 // stored using EGOCache.
 
@@ -26,7 +26,7 @@
 
 @interface ONNetworkManager ()
 
-@property (strong, nonatomic) NSThread *networkRunLoopThread;
+@property (strong, readwrite, nonatomic) NSRecursiveLock *lock;
 @property (strong, nonatomic) NSOperationQueue *networkQueue;
 @property (strong, nonatomic) NSMutableArray *operations;
 @property (assign, nonatomic) NSUInteger queuedCount;
@@ -50,36 +50,42 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
 - (id)init {
     self = [super init];
     if (self != nil) {
+        self.lock = [[NSRecursiveLock alloc] init];
         self.networkQueue = [[NSOperationQueue alloc] init];
         self.networkQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
         self.operations = [NSMutableArray array];
         self.queuedCount = 0;
-        
-        // We run all of our network callbacks on a secondary thread to ensure that they don't 
-        // contribute to main thread latency.  Create and configure that thread.
-        
-        self.networkRunLoopThread = [[NSThread alloc] initWithTarget:self selector:@selector(networkRunLoopThreadEntry) object:nil];
-        NSAssert(self.networkRunLoopThread != nil, @"Invalid State");
-        
-        [self.networkRunLoopThread setName:@"networkRunLoopThread"];
-        if ( [self.networkRunLoopThread respondsToSelector:@selector(setThreadPriority)] ) {
-            [self.networkRunLoopThread setThreadPriority:0.3];
-        }
-        
-        [self.networkRunLoopThread start];
     }
     return self;
 }
 
 // This thread runs all of our network operation run loop callbacks.
-- (void)networkRunLoopThreadEntry {
++ (void) __attribute__((noreturn)) networkRunLoopThreadEntry:(id)__unused object {
     NSAssert(![NSThread isMainThread], @"Invalid State");
-    while (YES) {
+    do {
         @autoreleasepool {
             [[NSRunLoop currentRunLoop] run];
         }
-    }
+    } while (YES);
     NSAssert(NO, @"Invalid State");
+}
+
++ (NSThread *)networkRunLoopThread {
+    static NSThread *_networkRunLoopThread = nil;
+    static dispatch_once_t oncePredicate;
+    
+    dispatch_once(&oncePredicate, ^{
+        _networkRunLoopThread = [[NSThread alloc] initWithTarget:self selector:@selector(networkRunLoopThreadEntry:) object:nil];
+        // name thread for debugging
+        [_networkRunLoopThread setName:@"networkRunLoopThread"];
+        // lower priority
+        if ( [_networkRunLoopThread respondsToSelector:@selector(setThreadPriority)] ) {
+            [_networkRunLoopThread setThreadPriority:0.3];
+        }
+        [_networkRunLoopThread start];
+    });
+    
+    return _networkRunLoopThread;
 }
 
 #pragma mark - Implementation
@@ -90,83 +96,83 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
 }
 
 - (void)addOperations:(NSArray *)operations {
-    @synchronized(self) {
-        NSArray *sorted = [ONNetworkManager sortOperations:operations];
-        for (ONNetworkOperation *operation in sorted) {
-            [self addOperation:operation];
-        }
+    [self.lock lock];
+    NSArray *sorted = [ONNetworkManager sortOperations:operations];
+    for (ONNetworkOperation *operation in sorted) {
+        [self addOperation:operation];
     }
+    [self.lock unlock];
 }
 
 - (void)addOperation:(ONNetworkOperation *)operation {
-    @synchronized(self) {
-        
-        // ensure the NSRunLoop thread is running
-        NSAssert([self.networkRunLoopThread isExecuting], @"Invalid State");
-        NSAssert(![self.networkRunLoopThread isFinished], @"Invalid State");
-        NSAssert(![self.networkRunLoopThread isCancelled], @"Invalid State");
-        
-        [self.operations addObject:operation];
-        
-        __weak ONNetworkOperation *weakOperation = operation;
-        
-        [operation setCompletionBlock:^{
-            @synchronized(self) {
-                self.queuedCount--;
-                [self.operations removeObject:weakOperation];
-            }
-        }];
-        
-        NSAssert([operation respondsToSelector:@selector(setRunLoopThread:)], @"Invalid State");
-        
-        if ([operation respondsToSelector:@selector(setRunLoopThread:)]) {
-            if ( [(id)operation runLoopThread] == nil ) {
-                [ (id)operation setRunLoopThread:self.networkRunLoopThread];
-            }
+    [self.lock lock];
+    
+    // ensure the NSRunLoop thread is running
+    NSAssert([[[self class] networkRunLoopThread] isExecuting], @"Invalid State");
+    NSAssert(![[[self class] networkRunLoopThread] isFinished], @"Invalid State");
+    NSAssert(![[[self class] networkRunLoopThread] isCancelled], @"Invalid State");
+    
+    [self.operations addObject:operation];
+    
+    __weak ONNetworkOperation *weakOperation = operation;
+    
+    [operation setCompletionBlock:^{
+        [self.lock lock];
+        self.queuedCount--;
+        [self.operations removeObject:weakOperation];
+        [self.lock unlock];
+    }];
+    
+    NSAssert([operation respondsToSelector:@selector(setRunLoopThread:)], @"Invalid State");
+    
+    if ([operation respondsToSelector:@selector(setRunLoopThread:)]) {
+        if ([(id)operation runLoopThread] == nil) {
+            [(id)operation setRunLoopThread:[[self class] networkRunLoopThread]];
         }
-        
-        [self.networkQueue addOperation:operation];
-        [operation changeStatus:ONNetworkOperation_Status_Ready];
-        self.queuedCount++;
     }
+    
+    [self.networkQueue addOperation:operation];
+    [operation changeStatus:ONNetworkOperation_Status_Ready];
+    self.queuedCount++;
+    [self.lock unlock];
 }
 
 - (void)cancelOperation:(ONNetworkOperation *)operation {
-    @synchronized(self) {
-        [operation cancel];
-        [self.operations removeObjectIdenticalTo:operation];
-    }
+    [self.lock lock];
+    [operation cancel];
+    [self.operations removeObjectIdenticalTo:operation];
+    [self.lock unlock];
 }
 
 - (void)cancelOperationsWithCategory:(NSString *)category {
-    @synchronized(self) {
-        NSMutableArray *operationsToCancel = [NSMutableArray array];
-        for (ONNetworkOperation *operation in self.operations) {
-            if ([operation.category isEqualToString:category]) {
-                [operationsToCancel addObject:operation];
-            }
-        }
-        
-        for (ONNetworkOperation *operation in operationsToCancel) {
-            [self cancelOperation:operation];
+    [self.lock lock];
+    NSMutableArray *operationsToCancel = [NSMutableArray array];
+    for (ONNetworkOperation *operation in self.operations) {
+        if ([operation.category isEqualToString:category]) {
+            [operationsToCancel addObject:operation];
         }
     }
+    
+    for (ONNetworkOperation *operation in operationsToCancel) {
+        [self cancelOperation:operation];
+    }
+    [self.lock unlock];
 }
 
 - (void)cancelAll {
-    @synchronized(self) {
-        [self.networkQueue cancelAllOperations];
-        [self.operations removeAllObjects];
-    }
+    [self.lock lock];
+    [self.networkQueue cancelAllOperations];
+    [self.operations removeAllObjects];
+    [self.lock unlock];
 }
 
 - (void)logOperations {
-    @synchronized(self) {
-        DebugLog(@"There are %i active operations", [self operationsCount]);
-        for (ONNetworkOperation *operation in self.operations) {
-            DebugLog(@"%@", operation);
-        }
+    [self.lock lock];
+    DebugLog(@"There are %i active operations", [self operationsCount]);
+    for (ONNetworkOperation *operation in self.operations) {
+        DebugLog(@"%@", operation);
     }
+    [self.lock unlock];
 }
 
 + (NSArray *)sortOperations:(NSArray *)operations {
