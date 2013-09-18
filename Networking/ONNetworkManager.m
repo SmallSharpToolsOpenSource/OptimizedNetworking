@@ -79,7 +79,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
         // name thread for debugging
         [_networkRunLoopThread setName:@"networkRunLoopThread"];
         // lower priority
-        if ( [_networkRunLoopThread respondsToSelector:@selector(setThreadPriority)] ) {
+        if ( [_networkRunLoopThread respondsToSelector:@selector(setThreadPriority:)] ) {
             [_networkRunLoopThread setThreadPriority:0.3];
         }
         [_networkRunLoopThread start];
