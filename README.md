@@ -30,6 +30,18 @@ more precise with categories and prioritizing downloads.
 * [MVCNetworking Sample Project](http://developer.apple.com/library/ios/#samplecode/MVCNetworking/Introduction/Intro.html)
 * [AFNetworking Project](https://github.com/AFNetworking/AFNetworking)
 
+## CocoaPods
+
+CircleButtons is available through [CocoaPods](http://cocoapods.org), to install
+it simply add the following line to your Podfile:
+
+    pod "OptimizedNetworking"
+
+or
+
+    platform :ios, "7.0"
+    pod 'OptimizedNetworking', :git => 'https://github.com/brennanMKE/OptimizedNetworking.git', :tag => '1.0.0'
+
 ### Questions
 
 My current download solution works with Blocks and the async API of NSURLConnection and an array
