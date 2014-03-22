@@ -25,7 +25,7 @@
 // how can tests for async processes be tested?
 
 - (void)testExample {
-    STFail(@"Unit tests are not implemented yet in OptimizedNetworkingTests");
+    XCTFail(@"Unit tests are not implemented yet in OptimizedNetworkingTests");
 }
 
 @end

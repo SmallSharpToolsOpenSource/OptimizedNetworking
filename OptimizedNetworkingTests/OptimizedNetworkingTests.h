@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 SmallSharpTools LLC. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface OptimizedNetworkingTests : SenTestCase
+@interface OptimizedNetworkingTests : XCTestCase
 
 @end

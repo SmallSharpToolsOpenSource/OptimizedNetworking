@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Singleton.h"
 #import "ONNetworkOperation.h"
 #import "ONDownloadItem.h"
 
+#define ON_SYNTHESIZE_SINGLETON_FOR_HEADER(classname) \
++ (classname *)sharedInstance;
+
 @interface ONNetworkManager : NSObject
 
-SYNTHESIZE_SINGLETON_FOR_HEADER(ONNetworkManager);
+ON_SYNTHESIZE_SINGLETON_FOR_HEADER(ONNetworkManager);
 
 - (void)setMaxConcurrentOperationCount:(NSInteger)maxCount;
 - (void)addOperations:(NSArray *)operations;

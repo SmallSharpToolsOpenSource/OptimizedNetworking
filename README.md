@@ -55,9 +55,9 @@ download files and later do other network communications.
 
 ### How it Works
 
-Working with threads is hard and Apple created NSOperationQueue to help developers avoid the headaches of 
-thread programming. Perhaps it is easier but working with NSOperationQueue was not as trivial as I thought
-it would be.
+Working with threads is hard and often the source of many problems so Apple created NSOperationQueue to
+help developers avoid the headaches of thread programming. Perhaps it is easier but working with
+NSOperationQueue was not as trivial as I thought it would be.
 
 First I have an NSOperationQueue and then a class which derives from NSOperation which is effectively an
 abstract class that you are meant to inherit. This operation class has various properties to relay the
@@ -74,3 +74,4 @@ beyond the focus of this project.
 * [Managing Concurrency with NSOperation](https://developer.apple.com/library/mac/#featuredarticles/ManagingConcurrency/_index.html)
 * [Introduction to Key-Value Observing Programming Guide](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html)
 * [NSRunLoop Class Reference](https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSRunLoop_Class/Reference/Reference.html)
+

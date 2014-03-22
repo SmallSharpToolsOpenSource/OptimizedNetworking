@@ -17,6 +17,17 @@
 // Search Flickr for orchid
 // kFlickBaseUrl + flickr.photos.search&api_key=%@&is_commons=true&text=sunset&per_page=100
 
+// Disables log messages when debugging is turned off
+#ifndef NDEBUG
+
+#define DebugLog(message, ...) NSLog(@"%s: " message, __PRETTY_FUNCTION__, ##__VA_ARGS__)
+
+#else
+
+#define DebugLog(message, ...)
+
+#endif
+
 #pragma mark - Class Extension
 #pragma mark -
 
@@ -140,12 +151,12 @@
         else {
             ONFlickrPhotoSetParser *parser = [[ONFlickrPhotoSetParser alloc] init];
             [parser parseWithData:data withCompletionBlock:^(NSArray *imageUrls, NSError *error) {
-                DebugLog(@"Found %i images to download from Flickr", imageUrls.count);
+                DebugLog(@"Found %lu images to download from Flickr", imageUrls.count);
                 [self downloadImages:imageUrls];
             }];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.25 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
-                DebugLog(@"There are %i operations in the networking queue.", [[ONNetworkManager sharedInstance] operationsCount]);
+                        
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.25 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                DebugLog(@"There are %lu operations in the networking queue.", (unsigned long)[[ONNetworkManager sharedInstance] operationsCount]);
             });
         }
     }];
@@ -215,9 +226,9 @@
 - (void)updateUI {
     dispatch_async(dispatch_get_main_queue(), ^{
         @synchronized (self) {
-            self.totalDownloadsLabel.text = [NSString stringWithFormat:@"%i", totalDownloads];
-            self.totalQueuedLabel.text = [NSString stringWithFormat:@"%i", [[ONNetworkManager sharedInstance] operationsCount]];
-            self.totalErrorsLabel.text = [NSString stringWithFormat:@"%i", totalErrors];
+            self.totalDownloadsLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)totalDownloads];
+            self.totalQueuedLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)[[ONNetworkManager sharedInstance] operationsCount]];
+            self.totalErrorsLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)totalErrors];
             self.averageDownloadTimeLabel.text = [NSString stringWithFormat:@"%3.2f", [self calculatedAverageDownloadDuration]];
             
             if (totalErrors > 0) {

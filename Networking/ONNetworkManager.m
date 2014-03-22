@@ -11,6 +11,24 @@
 #import "ONDownloadItem.h"
 #import "ONDownloadOperation.h"
 
+#define ON_SYNTHESIZE_SINGLETON_FOR_CLASS(classname) \
+\
+static classname *sharedInstance = nil; \
+static dispatch_once_t onceToken; \
+\
++ (classname *)sharedInstance \
+{ \
+@synchronized(self) \
+{ \
+dispatch_once(&onceToken, ^{ \
+sharedInstance = [[classname alloc] init]; \
+}); \
+} \
+\
+return sharedInstance; \
+} \
+\
+
 // NOTES
 // A download queue will regulate downloads. Download operations will be added to the queue
 // and counted as they are in progress and new items will be added based on priority.
@@ -42,7 +60,7 @@
 #pragma mark - Singleton
 #pragma mark -
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
+ON_SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
 
 #pragma mark - Initialization
 #pragma mark -
@@ -79,7 +97,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
         // name thread for debugging
         [_networkRunLoopThread setName:@"networkRunLoopThread"];
         // lower priority
-        if ( [_networkRunLoopThread respondsToSelector:@selector(setThreadPriority)] ) {
+        if ( [_networkRunLoopThread respondsToSelector:@selector(setThreadPriority:)] ) {
             [_networkRunLoopThread setThreadPriority:0.3];
         }
         [_networkRunLoopThread start];
@@ -167,12 +185,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
 }
 
 - (void)logOperations {
+#ifndef NDEBUG
     [self.lock lock];
-    DebugLog(@"There are %i active operations", [self operationsCount]);
+    NSLog(@"There are %lu active operations", (unsigned long)[self operationsCount]);
     for (ONNetworkOperation *operation in self.operations) {
-        DebugLog(@"%@", operation);
+        NSLog(@"%@", operation);
     }
     [self.lock unlock];
+#endif
 }
 
 + (NSArray *)sortOperations:(NSArray *)operations {
@@ -184,7 +204,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
             
             NSComparisonResult result = (NSComparisonResult)NSOrderedSame;
             
-            result = [[NSNumber numberWithInt:op1.status] compare:[NSNumber numberWithInt:op2.status]];
+            result = [[NSNumber numberWithInt:(int)op1.status] compare:[NSNumber numberWithInt:(int)op2.status]];
             
             if (result != NSOrderedSame) {
                 if ([obj1 isKindOfClass:[ONDownloadOperation class]] && 
@@ -192,8 +212,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ONNetworkManager);
                     ONDownloadOperation *dop1 = (ONDownloadOperation *)op1;
                     ONDownloadOperation *dop2 = (ONDownloadOperation *)op2;
                     
-                    result = [[NSNumber numberWithInt:dop2.downloadItem.priority] 
-                              compare:[NSNumber numberWithInt:dop1.downloadItem.priority]];
+                    result = [[NSNumber numberWithInt:(int)dop2.downloadItem.priority]
+                              compare:[NSNumber numberWithInt:(int)dop1.downloadItem.priority]];
                 }
             }
             

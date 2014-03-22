@@ -9,7 +9,23 @@
 #import "ONHeadRequestOperation.h"
 
 #import "ONNetworkManager.h"
-#import "NSDate+InternetDateTime.h"
+
+#ifndef NS_BLOCK_ASSERTIONS
+
+// Credit: http://sstools.co/maassert
+#define MAAssert(expression, ...) \
+do { \
+if(!(expression)) { \
+NSLog(@"Assertion failure: %s in %s on line %s:%d. %@", #expression, __func__, __FILE__, __LINE__, [NSString stringWithFormat: @"" __VA_ARGS__]); \
+abort(); \
+} \
+} while(0)
+
+#else
+
+#define MAAssert(expression, ...)
+
+#endif
 
 @implementation ONHeadRequestOperation
 
@@ -50,14 +66,15 @@
             //Connection: close
             //Content-Type: application/xml
             
-            [dict setValue:[NSNumber numberWithInt:response.statusCode] forKey:@"statusCode"];
+            [dict setValue:[NSNumber numberWithInt:(int)response.statusCode] forKey:@"statusCode"];
             NSString *contentType = [[response allHeaderFields] objectForKey:@"Content-Type"];
             if (contentType != nil) {
                 [dict setValue:contentType forKey:@"contentType"];
             }
             
             NSString *lastModifiedString = [[response allHeaderFields] objectForKey:@"Last-Modified"];
-            NSDate *lastModified = [NSDate dateFromInternetDateTimeString:lastModifiedString formatHint:DateFormatHintRFC822];
+            NSDate *lastModified = [self parseRFC822DateString:lastModifiedString];
+            
             if (lastModified != nil) {
                 [dict setValue:lastModified forKey:@"lastModified"];
             }
@@ -68,7 +85,7 @@
             }
             
             NSUInteger contentLength = [[[response allHeaderFields] objectForKey:@"Content-Length"] intValue];
-            [dict setValue:[NSNumber numberWithInt:contentLength] forKey:@"contentLength"];
+            [dict setValue:[NSNumber numberWithInt:(int)contentLength] forKey:@"contentLength"];
             
             if (self.headRequestCompletionHandler != nil) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -86,6 +103,21 @@
     operation.completionHandler = ^(NSData *data, NSError *error) {}; // do nothing
     
     [[ONNetworkManager sharedInstance] addOperation:operation];
+}
+
+#pragma mark - Private
+#pragma mark -
+
+- (NSDate *)parseRFC822DateString:(NSString *)dateString {
+    NSString *format = @"EEE, dd MMM yyyy HH:mm:ss zzz";
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:format];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [formatter setLocale:usLocale];
+    NSDate *date = [formatter dateFromString:dateString];
+    
+    return date;
 }
 
 @end

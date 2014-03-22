@@ -342,7 +342,7 @@
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if (httpResponse.statusCode != 200) {
             
-            NSString *errorMessage = [NSString stringWithFormat:@"Error during network operation: %i", httpResponse.statusCode];
+            NSString *errorMessage = [NSString stringWithFormat:@"Error during network operation: %li", (long)httpResponse.statusCode];
             NSDictionary *userInfo = [NSDictionary dictionaryWithObject:errorMessage forKey:NSLocalizedDescriptionKey];
             NSError *error = [NSError errorWithDomain:@"ONNetworkOperationErrorDomain"
                                                  code:httpResponse.statusCode

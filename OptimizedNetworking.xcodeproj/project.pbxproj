@@ -15,7 +15,6 @@
 		2605085715ACA7B000974E02 /* ONAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2605085615ACA7B000974E02 /* ONAppDelegate.m */; };
 		2605085A15ACA7B000974E02 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2605085815ACA7B000974E02 /* MainStoryboard.storyboard */; };
 		2605085D15ACA7B000974E02 /* ONViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2605085C15ACA7B000974E02 /* ONViewController.m */; };
-		2605086515ACA7B100974E02 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2605086415ACA7B100974E02 /* SenTestingKit.framework */; };
 		2605086615ACA7B100974E02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2605084615ACA7B000974E02 /* UIKit.framework */; };
 		2605086715ACA7B100974E02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2605084815ACA7B000974E02 /* Foundation.framework */; };
 		2605086F15ACA7B100974E02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2605086D15ACA7B100974E02 /* InfoPlist.strings */; };
@@ -30,7 +29,6 @@
 		26C9054515B85D400068666C /* ONDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9053D15B85D400068666C /* ONDownloadOperation.m */; };
 		26C9054615B85D400068666C /* ONNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9054015B85D400068666C /* ONNetworkManager.m */; };
 		26C9054715B85D400068666C /* ONNetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9054215B85D400068666C /* ONNetworkOperation.m */; };
-		26C9056215B8973B0068666C /* NSDate+InternetDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C9056015B8973B0068666C /* NSDate+InternetDateTime.m */; };
 		26CD4C8C15B4F74600806048 /* ONFlickrPhotoSetParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 26CD4C8B15B4F74600806048 /* ONFlickrPhotoSetParser.m */; };
 		26E0A92516016B6900D537EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 26E0A92416016B6900D537EE /* README.md */; };
 		26EE0A2A16E80EEC001E073F /* ONHttpPostOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 26EE0A2916E80EEB001E073F /* ONHttpPostOperation.m */; };
@@ -60,8 +58,7 @@
 		2605085915ACA7B000974E02 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		2605085B15ACA7B000974E02 /* ONViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ONViewController.h; sourceTree = "<group>"; };
 		2605085C15ACA7B000974E02 /* ONViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ONViewController.m; sourceTree = "<group>"; };
-		2605086315ACA7B100974E02 /* OptimizedNetworkingTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OptimizedNetworkingTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2605086415ACA7B100974E02 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		2605086315ACA7B100974E02 /* OptimizedNetworkingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OptimizedNetworkingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2605086C15ACA7B100974E02 /* OptimizedNetworkingTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OptimizedNetworkingTests-Info.plist"; sourceTree = "<group>"; };
 		2605086E15ACA7B100974E02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2605087015ACA7B100974E02 /* OptimizedNetworkingTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptimizedNetworkingTests.h; sourceTree = "<group>"; };
@@ -82,9 +79,6 @@
 		26C9054015B85D400068666C /* ONNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONNetworkManager.m; sourceTree = "<group>"; };
 		26C9054115B85D400068666C /* ONNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONNetworkOperation.h; sourceTree = "<group>"; };
 		26C9054215B85D400068666C /* ONNetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONNetworkOperation.m; sourceTree = "<group>"; };
-		26C9055F15B8973B0068666C /* NSDate+InternetDateTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+InternetDateTime.h"; path = "Common/NSDate+InternetDateTime.h"; sourceTree = SOURCE_ROOT; };
-		26C9056015B8973B0068666C /* NSDate+InternetDateTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+InternetDateTime.m"; path = "Common/NSDate+InternetDateTime.m"; sourceTree = SOURCE_ROOT; };
-		26C9056115B8973B0068666C /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Singleton.h; path = Common/Singleton.h; sourceTree = SOURCE_ROOT; };
 		26CD4C8A15B4F74500806048 /* ONFlickrPhotoSetParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONFlickrPhotoSetParser.h; sourceTree = "<group>"; };
 		26CD4C8B15B4F74600806048 /* ONFlickrPhotoSetParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONFlickrPhotoSetParser.m; sourceTree = "<group>"; };
 		26E0A92416016B6900D537EE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
@@ -107,7 +101,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2605086515ACA7B100974E02 /* SenTestingKit.framework in Frameworks */,
 				2605086615ACA7B100974E02 /* UIKit.framework in Frameworks */,
 				2605086715ACA7B100974E02 /* Foundation.framework in Frameworks */,
 			);
@@ -136,7 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				2605084215ACA7B000974E02 /* OptimizedNetworking.app */,
-				2605086315ACA7B100974E02 /* OptimizedNetworkingTests.octest */,
+				2605086315ACA7B100974E02 /* OptimizedNetworkingTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,7 +140,6 @@
 				2605084615ACA7B000974E02 /* UIKit.framework */,
 				2605084815ACA7B000974E02 /* Foundation.framework */,
 				2605084A15ACA7B000974E02 /* CoreGraphics.framework */,
-				2605086415ACA7B100974E02 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -155,7 +147,6 @@
 		2605084C15ACA7B000974E02 /* OptimizedNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				2605088515ACBB5C00974E02 /* Common */,
 				26C9053915B85D400068666C /* Networking */,
 				2605085815ACA7B000974E02 /* MainStoryboard.storyboard */,
 				2605085515ACA7B000974E02 /* ONAppDelegate.h */,
@@ -197,16 +188,6 @@
 				2605086D15ACA7B100974E02 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		2605088515ACBB5C00974E02 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				26C9055F15B8973B0068666C /* NSDate+InternetDateTime.h */,
-				26C9056015B8973B0068666C /* NSDate+InternetDateTime.m */,
-				26C9056115B8973B0068666C /* Singleton.h */,
-			);
-			name = Common;
 			sourceTree = "<group>";
 		};
 		26C9053915B85D400068666C /* Networking */ = {
@@ -265,8 +246,8 @@
 			);
 			name = OptimizedNetworkingTests;
 			productName = OptimizedNetworkingTests;
-			productReference = 2605086315ACA7B100974E02 /* OptimizedNetworkingTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 2605086315ACA7B100974E02 /* OptimizedNetworkingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -275,7 +256,8 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = ON;
-				LastUpgradeCheck = 0460;
+				LastTestingUpgradeCheck = 0510;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "SmallSharpTools LLC";
 			};
 			buildConfigurationList = 2605083C15ACA7B000974E02 /* Build configuration list for PBXProject "OptimizedNetworking" */;
@@ -351,7 +333,6 @@
 				26C9054515B85D400068666C /* ONDownloadOperation.m in Sources */,
 				26C9054615B85D400068666C /* ONNetworkManager.m in Sources */,
 				26C9054715B85D400068666C /* ONNetworkOperation.m in Sources */,
-				26C9056215B8973B0068666C /* NSDate+InternetDateTime.m in Sources */,
 				26EE0A2A16E80EEC001E073F /* ONHttpPostOperation.m in Sources */,
 				2639364A170B583E008DDECD /* ONHeadRequestOperation.m in Sources */,
 			);
@@ -407,9 +388,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -424,10 +406,14 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -436,9 +422,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -446,10 +433,13 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -486,14 +476,13 @@
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/OptimizedNetworking.app/OptimizedNetworking";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OptimizedNetworking/OptimizedNetworking-Prefix.pch";
 				INFOPLIST_FILE = "OptimizedNetworkingTests/OptimizedNetworkingTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -503,14 +492,13 @@
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/OptimizedNetworking.app/OptimizedNetworking";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OptimizedNetworking/OptimizedNetworking-Prefix.pch";
 				INFOPLIST_FILE = "OptimizedNetworkingTests/OptimizedNetworkingTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
