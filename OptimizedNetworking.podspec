@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
   s.name         = 'OptimizedNetworking'
   s.version      = '1.0.0'
-  s.summary      = 'Optimal download features'
-  s.homepage         = "http://www.smallsharptools.com/"
-  s.license          = 'MIT'
+  s.summary      = 'Optimal download features using NSOperations'
+  s.homepage     = "http://www.smallsharptools.com/"
+  s.license      = 'MIT'
   s.author = {
     'Brennan Stehling' => 'brennan@smallsharptools.com'
   }
